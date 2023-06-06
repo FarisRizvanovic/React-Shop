@@ -1,7 +1,7 @@
 import React from "react";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
-import Product from "./components/Product";
+import ProductDetails from "./components/ProductDetails";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
@@ -12,6 +12,7 @@ import {
   ScrollRestoration,
 } from "react-router-dom";
 import { productsData } from "./api/Api";
+import Shop from "./pages/Shop";
 
 const Layout = () => {
   return (
@@ -49,11 +50,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/product/:id",
-        element: <Product />,
+        element: <ProductDetails />,
       },
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/shop",
+        element: <Shop />,
       },
     ],
   },

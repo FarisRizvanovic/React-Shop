@@ -28,19 +28,14 @@ function Header() {
                 Home
               </li>
             </Link>
-
-            <li
-              className="text-base text-black font-bold hover:text-orange-900
+            <Link to="/shop">
+              <li
+                className="text-base text-black font-bold hover:text-orange-900
               hover:underline underline-offset-2 decoration-[1px] cursor-pointer duration-300"
-            >
-              Featured Products
-            </li>
-            <li
-              className="text-base text-black font-bold hover:text-orange-900
-              hover:underline underline-offset-2 decoration-[1px] cursor-pointer duration-300"
-            >
-              Shop
-            </li>
+              >
+                Shop
+              </li>
+            </Link>
           </ul>
           <Link to="/cart">
             <div className="relative">

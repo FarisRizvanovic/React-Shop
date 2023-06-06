@@ -21,7 +21,7 @@ export const bazarSlice = createSlice({
     },
     deleteItem: (state, action) => {
       state.productData = state.productData.filter(
-        (item) => item._id !== action.payload._id
+        (item) => item._id !== action.payload
       );
     },
     resetCart: (state) => {
@@ -29,7 +29,7 @@ export const bazarSlice = createSlice({
     },
     incrementQuantity: (state, action) => {
       const item = state.productData.find(
-        (item) => item._id === action.payload._id
+        (item) => item._id === action.payload
       );
 
       if (item) {
@@ -38,7 +38,7 @@ export const bazarSlice = createSlice({
     },
     decrementQuantity: (state, action) => {
       const item = state.productData.find(
-        (item) => item._id === action.payload._id
+        (item) => item._id === action.payload
       );
       if (item.quantity >= 1) {
         item.quantity--;

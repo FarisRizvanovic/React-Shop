@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { HiArrowRight, HiArrowLeft } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -20,7 +21,7 @@ const Banner = () => {
   };
 
   return (
-    <div className="w-full h-auto overflow-x-hidden">
+    <div className="w-full h-auto overflow-x-hidden mb-1">
       <div className="w-screen h-[80vh] relative">
         <div
           style={{ transform: `translateX(-${currentSlide * 100}vw)` }}
@@ -48,20 +49,30 @@ const Banner = () => {
             alt="ImgFour"
           />
         </div>
-        <div className="absolute w-fit left-0 right-0 mx-auto flex gap-8 bottom-44">
-          <div
-            onClick={prevSlide}
-            className="w-14 h-12 border-[1px] border-gray-700 flex items-center justify-center hover:cursor-pointer hover:bg-gray-700
+        <div className="absolute w-fit left-0 right-0 mx-auto flex flex-col gap-4 bottom-36">
+          <Link
+            to="/"
+            className="w-full h-12 border-[1px] border-gray-700 flex items-center justify-center hover:cursor-pointer hover:bg-gray-700
          hover:text-white active:bg-gray-900 duration-300"
           >
-            <HiArrowLeft />
-          </div>
-          <div
-            onClick={nextSlide}
-            className="w-14 h-12 border-[1px] border-gray-700 flex items-center justify-center hover:cursor-pointer hover:bg-gray-700
+            {" "}
+            Shop now
+          </Link>
+          <div className="flex w-fit gap-8">
+            <div
+              onClick={prevSlide}
+              className="w-14 h-12 border-[1px] border-gray-700 flex items-center justify-center hover:cursor-pointer hover:bg-gray-700
          hover:text-white active:bg-gray-900 duration-300"
-          >
-            <HiArrowRight />
+            >
+              <HiArrowLeft />
+            </div>
+            <div
+              onClick={nextSlide}
+              className="w-14 h-12 border-[1px] border-gray-700 flex items-center justify-center hover:cursor-pointer hover:bg-gray-700
+         hover:text-white active:bg-gray-900 duration-300"
+            >
+              <HiArrowRight />
+            </div>
           </div>
         </div>
       </div>
