@@ -1,7 +1,7 @@
 import React from "react";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
-import Admin from "./pages/Admin";
+import AdminLayout from "./pages/AdminLayout";
 import ProductDetails from "./components/ProductDetails";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -12,8 +12,15 @@ import {
   RouterProvider,
   ScrollRestoration,
 } from "react-router-dom";
-import { productsData } from "./api/Api";
+import { productsData, getDashboardData } from "./api/Api";
 import Shop from "./pages/Shop";
+import AdminSidebar from "./components/Admin/AdminSidebar";
+import Dashboard from "./components/Admin/Dashboard";
+import ContentManagment from "./components/Admin/ContentManagment";
+import ProductManagment from "./components/Admin/ProductManagment";
+import OrderManagment from "./components/Admin/OrderManagment";
+import CustomerManagment from "./components/Admin/CustomerManagment";
+import UserManagment from "./components/Admin/UserManagment";
 
 const Layout = () => {
   return (
@@ -64,7 +71,34 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin",
-        element: <Admin />,
+        element: <AdminLayout />,
+        children: [
+          {
+            path: "/admin/dashboard",
+            element: <Dashboard />,
+            loader: getDashboardData,
+          },
+          {
+            path: "/admin/content-managment",
+            element: <ContentManagment />,
+          },
+          {
+            path: "/admin/products-managment",
+            element: <ProductManagment />,
+          },
+          {
+            path: "/admin/order-managment",
+            element: <OrderManagment />,
+          },
+          {
+            path: "/admin/customers-managment",
+            element: <CustomerManagment />,
+          },
+          {
+            path: "/admin/user-managment",
+            element: <UserManagment />,
+          },
+        ],
       },
     ],
   },

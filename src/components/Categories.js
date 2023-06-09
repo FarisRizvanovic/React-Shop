@@ -1,40 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import SidebarItem from "./SidebarItem";
+import { categoriesData } from "../api/Api";
 
 const Categories = () => {
-  const clothingCategories = [
-    "T-shirts",
-    "Shirts",
-    "Blouses",
-    "Pants",
-    "Jeans",
-    "Shorts",
-    "Dresses",
-    "Skirts",
-    "Jackets",
-    "Coats",
-    "Sweaters",
-    "Hoodies",
-    "Activewear",
-    "Swimwear",
-    "Sleepwear",
-    "Underwear",
-    "Socks",
-    "Accessories",
-    "Shoes",
-    "Bags",
-  ];
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await categoriesData();
+        const categories = response.data;
+
+        setCategories(categories);
+      } catch (error) {
+        console.error("Failed to fetch categories:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  const [selectedMenuItem, setSelectedMenuItem] = useState("All categories");
+
+  const handleMenuItemClick = (menuItem) => {
+    setSelectedMenuItem(menuItem);
+  };
 
   return (
-    <div className="h-full w-full sticky left-0 top-20 pt-5 flex gap-3 flex-col">
-      <h2 className="text-center font-medium text-2xl">Categories</h2>
-      <span className="w-full h-[1px] bg-black"></span>
-      <div className="flex w-full flex-col justify-center items-center">
-        {clothingCategories.map((element) => (
-          <div className="hover:bg-gray-50 w-full py-3">
-            <p>{element}</p>
-          </div>
+    <div className="bg-gray-900 text-white w-full text-sm h-screen">
+      <ul className="flex flex-col p-4">
+        {categories.map((item) => (
+          <li className="mb-4">
+            <SidebarItem
+              text={item.name}
+              onItemClick={handleMenuItemClick}
+              selectedMenuItem={selectedMenuItem}
+            />
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };

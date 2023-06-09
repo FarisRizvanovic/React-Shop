@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import { BsPersonFill, BsPaypal } from "react-icons/bs";
+import { Button } from "@material-tailwind/react";
 
 const Footer = () => {
   return (
@@ -66,16 +67,23 @@ const Footer = () => {
             </p>
           </div>
         </div>
-
-        <div className="flex flex-col justify-center gap-2">
-          <input
-            type="text"
-            placeholder="E-mail"
-            className="bg-transparent border px-4 py-2 text-sm text-white "
-          />
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ">
-            Subscribe
-          </button>
+        <div className="flex flex-col gap-2">
+          <h2 className="text-2xl font-semibold text-white mb-4">
+            Subscribe to our newsletter
+          </h2>
+          <div className="flex flex-col justify-center gap-2">
+            <input
+              type="text"
+              placeholder="E-mail"
+              className="bg-transparent border px-4 py-2 text-sm text-white "
+            />
+            <Button
+              className="text-sm font-bold py-2 px-4 rounded-none"
+              color="blue"
+            >
+              Subscribe
+            </Button>
+          </div>
         </div>
       </div>
     </div>

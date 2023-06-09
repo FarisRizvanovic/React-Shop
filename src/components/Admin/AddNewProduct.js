@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { categoriesData, addANewProduct } from "../../api/Api";
 
-const AddNewProduct = () => {
+const AddNewProduct = ({ onNewProductAdded }) => {
   const [categories, setCategories] = useState([]);
   const [prevPriceErrorShown, setPrevPriceErrorShown] = useState(false);
   const [currPriceErrorShown, setCurrPriceErrorShown] = useState(false);
@@ -12,7 +12,6 @@ const AddNewProduct = () => {
       try {
         const response = await categoriesData();
         const categories = response.data;
-
         setCategories(categories);
       } catch (error) {
         console.error("Failed to fetch categories:", error);
@@ -31,6 +30,20 @@ const AddNewProduct = () => {
   const [quantity, setQuantity] = useState(1);
   const [category, setCategory] = useState("Select a category");
   const [selectedImage, setSelectedImage] = useState(null);
+
+  const resetData = () => {
+    setFile(null);
+    setTitle("Click to enter a new title");
+    setPrevPrice(0.0);
+    setCurrPrice(0.0);
+    setNewInColl(false);
+    setDescription("No description");
+    setQuantity(1);
+    setCategory("Select a category");
+    setSelectedImage(null);
+
+    onNewProductAdded();
+  };
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -52,7 +65,6 @@ const AddNewProduct = () => {
       (typeof value === "string" && !isNaN(Number(value)))
     ) {
       setPrevPrice(value);
-      console.log(prevPrice);
       setPrevPriceErrorShown(false);
     } else if (!prevPriceErrorShown) {
       setPrevPriceErrorShown(true);
@@ -66,7 +78,6 @@ const AddNewProduct = () => {
       (typeof value === "string" && !isNaN(Number(value)))
     ) {
       setCurrPrice(value);
-      console.log(currPrice);
       setCurrPriceErrorShown(false);
     } else if (!currPriceErrorShown) {
       setCurrPriceErrorShown(true);
@@ -74,11 +85,9 @@ const AddNewProduct = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const selectedCategory = categories.find((c) => c.name === category);
-
-    console.log(selectedCategory);
 
     if (selectedCategory === undefined || selectedCategory === null) {
       toast.error("Please select a category");
@@ -93,30 +102,27 @@ const AddNewProduct = () => {
 
     formData.append("Title", title);
     formData.append("IsNew", newInColl);
-    formData.append("OldPrice", prevPrice.replace(/\./g, ","));
-    formData.append("Price", currPrice.replace(/\./g, ","));
+    formData.append("OldPrice", (prevPrice + "").replace(/\./g, ","));
+    formData.append("Price", (currPrice + "").replace(/\./g, ","));
     formData.append("Description", description);
     formData.append("CategoryId", 1);
     formData.append("Rating", 0);
     formData.append("ImageFile", file);
 
-    console.log(formData);
-
     try {
-      const request = addANewProduct(formData);
-      if (request.success) {
+      const request = await addANewProduct(formData).then(() => {
         toast.success("Product added successfully");
-      }
+        resetData();
+      });
     } catch (e) {
       toast.error("Errow while adding a new product.");
     }
   };
 
   return (
-    <div className="mt-5">
+    <div>
       <form onSubmit={handleSubmit}>
-        {/*  */}
-        <h2 className="text-3xl font-bold text-green-500 text-center">
+        <h2 className="text-3xl font-bold text-blue-500 text-center">
           Add a new product
         </h2>
         <div className="max-w-screen-xl mx-auto my-10 flex gap-10">
@@ -128,7 +134,7 @@ const AddNewProduct = () => {
                 alt="productImg"
               />
             ) : (
-              <div className="flex justify-center items-center h-full text-gray-500">
+              <div className="flex justify-center items-center h-full text-gray-500 shadow-xl">
                 <input
                   id="imageSelector"
                   type="file"
@@ -230,9 +236,7 @@ const AddNewProduct = () => {
             <div className="text-base text-gray-500">
               <select
                 value={category}
-                onChange={(e) =>
-                  setCategory(e.target.value) & console.log(e.target.value)
-                }
+                onChange={(e) => setCategory(e.target.value)}
               >
                 <option key={"Select a category"} value="">
                   Select a category

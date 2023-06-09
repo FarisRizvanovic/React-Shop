@@ -21,7 +21,7 @@ const Home = () => {
         <h1 className="text-2xl bg-black text-white px-5 py-2 w-100 text-center">
           To see more products go to Shop tab
         </h1>
-        <Link to="/">
+        <Link to="/shop">
           <h2 className="text-xl text-gray-400 hover:text-black duration-500">
             - Shop -
           </h2>

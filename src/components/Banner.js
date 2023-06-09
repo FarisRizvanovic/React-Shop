@@ -51,11 +51,10 @@ const Banner = () => {
         </div>
         <div className="absolute w-fit left-0 right-0 mx-auto flex flex-col gap-4 bottom-36">
           <Link
-            to="/"
+            to="/shop"
             className="w-full h-12 border-[1px] border-gray-700 flex items-center justify-center hover:cursor-pointer hover:bg-gray-700
          hover:text-white active:bg-gray-900 duration-300"
           >
-            {" "}
             Shop now
           </Link>
           <div className="flex w-fit gap-8">
