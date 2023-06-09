@@ -9,6 +9,7 @@ const Product = () => {
   const dispatch = useDispatch();
   const [details, setDetails] = useState({});
   let [baseQuantity, setBaseQuantity] = useState(1);
+  const hostLink = "http://localhost:5108/";
 
   const location = useLocation();
 
@@ -22,7 +23,7 @@ const Product = () => {
         <div className="w-2/5 relative">
           <img
             className="w-full h-[550px] object-cover"
-            src={details.image}
+            src={hostLink + details.image}
             alt="productImg"
           />
           <div className="absolute top-5 right-0">
@@ -97,7 +98,9 @@ const Product = () => {
           </div>
           <p className="text-base text-gray-500">
             Category:{" "}
-            <span className="font-medium capitalize">{details.category}</span>
+            <span className="font-medium capitalize">
+              {details.category_id}
+            </span>
           </p>
         </div>
       </div>

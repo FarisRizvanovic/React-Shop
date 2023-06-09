@@ -8,7 +8,7 @@ function Header() {
 
   return (
     <div className="w-full h-20 bg-white border-b-[2px] border-b-gray-300 font-titleFont sticky top-0 left-0 z-10">
-      <div className="max-w-screen-x1 h-full mx-auto flex items-center justify-around">
+      <div className="max-w-screen-x1 h-full flex items-center justify-between mx-10">
         <Link to="/" className="select-none">
           <div>
             <img
@@ -34,6 +34,14 @@ function Header() {
               hover:underline underline-offset-2 decoration-[1px] cursor-pointer duration-300"
               >
                 Shop
+              </li>
+            </Link>
+            <Link to="/admin">
+              <li
+                className="text-base text-black font-bold hover:text-orange-900
+              hover:underline underline-offset-2 decoration-[1px] cursor-pointer duration-300"
+              >
+                Admin
               </li>
             </Link>
           </ul>

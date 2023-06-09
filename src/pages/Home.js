@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Banner from "../components/Banner";
 import Products from "../components/Products";
 import { Link, useLoaderData } from "react-router-dom";
+import Base64Image from "../components/Base64Image";
 
 const Home = () => {
   const [products, setProducts] = useState([]);

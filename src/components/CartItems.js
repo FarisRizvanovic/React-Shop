@@ -13,6 +13,7 @@ import { resetCart } from "../redux/bazarSlice";
 
 const CartItem = () => {
   const productData = useSelector((state) => state.bazar.productData);
+  const hostLink = "http://localhost:5108/";
 
   const dispatch = useDispatch();
   return (
@@ -36,7 +37,7 @@ const CartItem = () => {
               />
               <img
                 className="w-32 h-32 object-cover"
-                src={item.image}
+                src={hostLink + item.image}
                 alt="productImage"
               />
             </div>

@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 const ProductsCard = ({ product }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const hostLink = "http://localhost:5108/";
 
   const handleDetails = () => {
     navigate(`/product/${product._id}`, {
@@ -25,7 +26,7 @@ const ProductsCard = ({ product }) => {
       >
         <img
           className="w-full h-full object-cover group-hover:scale-110 duration-500"
-          src={product.image}
+          src={hostLink + product.image}
           alt="productImg"
         />
       </div>
