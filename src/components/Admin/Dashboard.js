@@ -43,10 +43,17 @@ const Dashboard = () => {
             View products low on stock
           </Button>
         </div>
+        <div className="bg-white flex-1 shadow-xl p-7 rounded-3xl">
+          <p className="text-gray-500">New orders</p>
+          <p className="font-medium mt-2 text-3xl ml-4">{4}</p>
+          <Button className="rounded-none mt-1 text-sm bg-yellow-500">
+            View orders
+          </Button>
+        </div>
       </div>
 
       <div className="flex gap-7 max-h-full">
-        <div class="flex-1 flex flex-col justify-center items-center bg-white shadow-2xl px-7 pb-7 pt-5 rounded-3xl ">
+        <div className="flex-1 flex flex-col justify-center items-center bg-white shadow-2xl px-7 pb-7 pt-5 rounded-3xl ">
           <h2 className="text-center font-semibold text-gray-500">
             Sales per month
           </h2>

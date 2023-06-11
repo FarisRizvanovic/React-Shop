@@ -17,34 +17,32 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { productsData } from "../../api/Api";
+import { getUsers } from "../../api/Api";
 
 const TABLE_HEAD = [
-  "Product",
-  "Stock",
-  "Date added",
-  "New in collection",
-  "Old price",
-  "New price",
-  "Rating",
+  "Profile picture",
+  "First name",
+  "Last name",
+  "Role",
   "Edit",
 ];
 
-const hostLink = "http://localhost:5108/";
+const defaultProfilePicture = "http://localhost:5108/Resources/user.jpeg";
 
-export default function ProductsManagmentTable() {
-  const [products, setProducts] = useState([]);
+export default function UsersTable() {
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchUsers = async () => {
       try {
-        const response = await productsData();
-        const products = response.data;
+        const response = await getUsers();
+        const users = response.data;
 
-        setProducts(products);
+        console.log(users);
+        setUsers(users);
       } catch (error) {}
     };
-    fetchProducts();
+    fetchUsers();
   }, []);
 
   return (
@@ -53,10 +51,10 @@ export default function ProductsManagmentTable() {
         <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Last Added Products
+              All users
             </Typography>
             <Typography className="mt-1 font-normal text-gray-500">
-              These are details about the last added products
+              List of all users and roles
             </Typography>
           </div>
           <div className="flex w-full shrink-0 gap-2 md:w-max">
@@ -95,34 +93,32 @@ export default function ProductsManagmentTable() {
             </tr>
           </thead>
           <tbody>
-            {products.map(
+            {users.map(
               (
                 {
-                  product_id,
-                  image,
-                  title,
-                  stock,
-                  date,
-                  isNew,
-                  oldPrice,
-                  price,
-                  rating,
+                  first_name,
+                  id,
+                  last_name,
+                  password_hash,
+                  password_salt,
+                  role,
+                  username,
                 },
                 index
               ) => {
-                const isLast = index === products.length - 1;
+                const isLast = index === users.length - 1;
                 const classes = isLast
                   ? "p-4"
                   : "p-4 border-b border-blue-gray-50";
 
                 return (
-                  <tr key={product_id}>
-                    {/* Product */}
+                  <tr key={id}>
+                    {/* Profile picture */}
                     <td className={classes}>
                       <div className="flex items-center gap-3">
                         <Avatar
-                          src={hostLink + image}
-                          alt={title}
+                          src={defaultProfilePicture}
+                          alt={"title"}
                           size="md"
                           className="border border-blue-gray-50 bg-blue-gray-50/50 p-1 object-cover"
                         />
@@ -131,64 +127,46 @@ export default function ProductsManagmentTable() {
                           color="blue-gray"
                           className="font-bold"
                         >
-                          {title}
+                          {username}
                         </Typography>
                       </div>
                     </td>
-                    {/* Stock */}
+                    {/* First name */}
                     <td className={classes}>
                       <Typography
                         variant="small"
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {stock}
+                        {first_name}
                       </Typography>
                     </td>
-                    {/* Date added */}
+                    {/* Last name */}
                     <td className={classes}>
                       <Typography
                         variant="small"
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {date}1.1.2023
+                        {last_name}
                       </Typography>
                     </td>
-                    {/* New in collection */}
+                    {/* Role */}
                     <td className={classes}>
                       <div className="w-max">
                         <Chip
                           size="sm"
                           variant="ghost"
-                          value={isNew === true ? "Yes" : "No"}
-                          className={`rounded-xl ${
-                            isNew === true ? "bg-green-300" : "bg-amber-300"
+                          value={role === "admin" ? "Admin" : "User"}
+                          className={` rounded-xl ${
+                            role === "admin" ? "bg-green-300" : "bg-amber-300"
                           }`}
                         />
                       </div>
                     </td>
-                    {/* Old price */}
-                    <td className={classes}>
-                      <div className="flex items-center gap-3 text-red-500 font-semibold">
-                        ${oldPrice}
-                      </div>
-                    </td>
-                    {/* New price */}
-                    <td className={classes}>
-                      <div className="flex items-center gap-3 text-green-600 font-semibold">
-                        ${price}
-                      </div>
-                    </td>
-                    {/* Rating */}
-                    <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        {rating} / 5
-                      </div>
-                    </td>
                     {/* Edit */}
                     <td className={classes}>
-                      <Tooltip content="Edit Product" className="p-2">
+                      <Tooltip content="Edit User" className="p-2">
                         <IconButton
                           variant="text"
                           color="blue-gray"

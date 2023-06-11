@@ -1,11 +1,10 @@
 import React from "react";
+import ProductLowOnStockTable from "./ProductLowOnStockTable";
 
 const ProductsLowOnStock = () => {
   return (
     <div>
-      <h2 className="text-3xl font-bold text-red-500 text-center">
-        Products low on stock
-      </h2>
+      <ProductLowOnStockTable />
     </div>
   );
 };

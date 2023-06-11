@@ -14,13 +14,14 @@ import {
 } from "react-router-dom";
 import { productsData, getDashboardData } from "./api/Api";
 import Shop from "./pages/Shop";
-import AdminSidebar from "./components/Admin/AdminSidebar";
 import Dashboard from "./components/Admin/Dashboard";
 import ContentManagment from "./components/Admin/ContentManagment";
 import ProductManagment from "./components/Admin/ProductManagment";
 import OrderManagment from "./components/Admin/OrderManagment";
 import CustomerManagment from "./components/Admin/CustomerManagment";
 import UserManagment from "./components/Admin/UserManagment";
+import Other from "./pages/Other";
+import InternalServerError from "./pages/InternalServerError";
 
 const Layout = () => {
   return (
@@ -50,6 +51,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
+    errorElement: <InternalServerError />,
     children: [
       {
         path: "/",
@@ -99,6 +101,10 @@ const router = createBrowserRouter([
             element: <UserManagment />,
           },
         ],
+      },
+      {
+        path: "*",
+        element: <Other />,
       },
     ],
   },

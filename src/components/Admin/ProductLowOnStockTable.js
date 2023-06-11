@@ -17,7 +17,7 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { productsData } from "../../api/Api";
+import { getProductsLowOnStock } from "../../api/Api";
 
 const TABLE_HEAD = [
   "Product",
@@ -32,15 +32,15 @@ const TABLE_HEAD = [
 
 const hostLink = "http://localhost:5108/";
 
-export default function ProductsManagmentTable() {
+export default function ProductLowOnStockTable() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await productsData();
+        const response = await getProductsLowOnStock();
         const products = response.data;
-
+        console.log(products);
         setProducts(products);
       } catch (error) {}
     };
@@ -53,10 +53,10 @@ export default function ProductsManagmentTable() {
         <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Last Added Products
+              Products low on stock
             </Typography>
             <Typography className="mt-1 font-normal text-gray-500">
-              These are details about the last added products
+              These are the produts that are low on stock ({`<`}5)
             </Typography>
           </div>
           <div className="flex w-full shrink-0 gap-2 md:w-max">

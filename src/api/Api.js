@@ -7,7 +7,7 @@ export async function productsData() {
 }
 
 export async function categoriesData() {
-  const categories = await axios.get(host + "/api/Customers/GetCategories");
+  const categories = await axios.get(host + "/api/Categories/GetCategories");
   return categories;
 }
 
@@ -29,6 +29,14 @@ export async function getCategoryCount() {
     host + "/api/Category/GetCategoryCount"
   );
   return categoryCount;
+}
+
+export async function getProductsLowOnStock() {
+  const limit = 5;
+  const lowOnStock = await axios.get(
+    `${host}/api/Products/GetProductsLowOnStock/products/lowonstock/limit=${limit}`
+  );
+  return lowOnStock;
 }
 
 export async function getProductsLowOnStockCount() {
@@ -63,4 +71,69 @@ export async function getProductManagmentInitialData() {
     lowOnStockCount: lowOnStockCount.data,
     productData: products.data,
   };
+}
+
+export async function getUsers() {
+  const users = await axios.get("http://localhost:5108/api/User/GetUsers");
+
+  return users;
+}
+
+export async function GetOrders() {
+  const orders = await axios.get("http://localhost:5108/api/Orders/GetOrders");
+
+  return orders;
+}
+
+export async function ordersWithCustomers() {
+  const ordersResponse = await GetOrders();
+  const orders = ordersResponse.data;
+
+  const ordersWithCustomerNames = await Promise.all(
+    orders.map(async (order) => {
+      const customerNameResponse = await GetCustomerById(order.customer_id);
+      return {
+        ...order,
+        customer: customerNameResponse.data,
+      };
+    })
+  );
+
+  return ordersWithCustomerNames;
+}
+
+export async function GetCustomerById(customerId) {
+  const customer = await axios.get(
+    `http://localhost:5108/api/Customers/GetCustomerById/orderid=${customerId}`
+  );
+
+  return customer;
+}
+
+export async function orderItemsForOrderId(orderId) {
+  const orderItems =
+    await axios.get(`http://localhost:5108/api/OrderItems/GetOrderItems/orderitems/orderid=${orderId}
+  `);
+
+  return orderItems;
+}
+
+export async function productsForOrderId(orderId) {
+  const ordersItemsResponse = await orderItemsForOrderId(orderId);
+  const orders = ordersItemsResponse.data;
+  const productsForOrderId = await Promise.all(
+    orders.map(async (order) => {
+      const product = await productById(order.product_id);
+      return { ...order, ...product.data };
+    })
+  );
+
+  return productsForOrderId;
+}
+
+export async function productById(productId) {
+  const product = await axios.get(
+    `http://localhost:5108/api/Products/GetProductById/product/id=${productId} `
+  );
+  return product;
 }
