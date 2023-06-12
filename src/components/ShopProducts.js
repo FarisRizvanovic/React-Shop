@@ -6,7 +6,7 @@ const ShopProducts = ({ products }) => {
     <div>
       <div className="py-10 grid grid-cols-4 gap-10">
         {products.map((item) => (
-          <ProductsCard key={item._id} product={item} />
+          <ProductsCard product={item} key={item.product_id} />
         ))}
       </div>
     </div>

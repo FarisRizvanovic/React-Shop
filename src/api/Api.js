@@ -7,7 +7,7 @@ export async function productsData() {
 }
 
 export async function categoriesData() {
-  const categories = await axios.get(host + "/api/Categories/GetCategories");
+  const categories = await axios.get(host + "/api/Category/GetCategories");
   return categories;
 }
 

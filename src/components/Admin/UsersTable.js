@@ -38,7 +38,6 @@ export default function UsersTable() {
         const response = await getUsers();
         const users = response.data;
 
-        console.log(users);
         setUsers(users);
       } catch (error) {}
     };
@@ -112,7 +111,7 @@ export default function UsersTable() {
                   : "p-4 border-b border-blue-gray-50";
 
                 return (
-                  <tr key={id}>
+                  <tr key={id} className="hover:bg-gray-100 duration-200">
                     {/* Profile picture */}
                     <td className={classes}>
                       <div className="flex items-center gap-3">

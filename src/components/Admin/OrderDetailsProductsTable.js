@@ -54,7 +54,10 @@ export default function OrderDetailsProductsTable({ products }) {
                 : "p-4 border-b border-blue-gray-50";
 
               return (
-                <tr key={product.product_id}>
+                <tr
+                  key={product.product_id}
+                  className="hover:bg-gray-100 duration-200"
+                >
                   {/* Product */}
                   <td className={classes}>
                     <div className="flex items-center gap-3">

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@material-tailwind/react";
 import SalesChart from "./SalesChart";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import SalesPerCategoryChart from "./SalesPerCategoryChart";
 
 const Dashboard = () => {
@@ -18,7 +18,7 @@ const Dashboard = () => {
   }, [dashboardData]);
 
   return (
-    <div className="flex min-h-screen flex-col mx-16 mt-10 mb-16 gap-7 ">
+    <div className="flex min-h-[75vh] flex-col mx-16 mt-10 mb-16 gap-7 ">
       <div className="flex gap-10 justify-between">
         <div className="bg-white flex-1 shadow-xl p-7 rounded-3xl">
           <p className="text-gray-500">Total Products</p>
@@ -46,9 +46,12 @@ const Dashboard = () => {
         <div className="bg-white flex-1 shadow-xl p-7 rounded-3xl">
           <p className="text-gray-500">New orders</p>
           <p className="font-medium mt-2 text-3xl ml-4">{4}</p>
+
           <Button className="rounded-none mt-1 text-sm bg-yellow-500">
             View orders
           </Button>
+
+          <div className="mb-4"></div>
         </div>
       </div>
 

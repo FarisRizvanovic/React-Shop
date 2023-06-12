@@ -41,7 +41,7 @@ const Categories = () => {
       </div>
       <ul className="flex flex-col p-4">
         {categories.map((item) => (
-          <li className="mb-4">
+          <li className="mb-4" key={item.category_id}>
             <SidebarItem
               text={item.name}
               onItemClick={handleMenuItemClick}
