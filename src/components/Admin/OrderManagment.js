@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { ordersWithCustomers, productsForOrderId } from "../../api/Api";
 import { toast } from "react-toastify";
 import OrderDetailsProductsTable from "./OrderDetailsProductsTable";
+import { Button } from "@material-tailwind/react";
 
 const OrderManagment = () => {
   const [ordersWCustomers, setOrdersWCustomers] = useState([]);
   const [currentOrderId, setCurrentOrderId] = useState(0);
   const [currentCustomer, setCurrentCustomer] = useState({});
   const [products, setProducts] = useState([]);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const getOrdersWithCustomers = async () => {
@@ -17,6 +19,7 @@ const OrderManagment = () => {
         setOrdersWCustomers(data);
         setCurrentOrderId(data[0].order_id);
         setCurrentCustomer(data[0].customer);
+        console.log(data);
       } catch {
         toast.error("Couldn't get the orders.");
       }
@@ -52,6 +55,22 @@ const OrderManagment = () => {
     fetchProducts();
   }, [currentOrderId]);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const formattedDate = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+
+    return formattedDate;
+  };
+
+  useEffect(() => {
+    let productTotal = 0;
+    products.map((product) => {
+      productTotal += product.price;
+    });
+    setTotal(productTotal);
+    console.log(total.toString.length);
+  }, [products]);
+
   return (
     <div className="flex min-h-screen flex-col mx-16 mt-10 mb-16 gap-7 max-w-[90vw]">
       <div className="flex gap-4 min-h-screen  ">
@@ -64,7 +83,7 @@ const OrderManagment = () => {
               <div
                 key={orderWCustomer.order_id}
                 onClick={() => setCurrentOrderId(orderWCustomer.order_id)}
-                className={`flex items-center shadow-2xl  ${
+                className={`flex items-center shadow-2xl cursor-pointer  ${
                   orderWCustomer.order_id === currentOrderId
                     ? "rounded-l-2xl bg-blue-400 "
                     : " mr-7 rounded-2xl bg-blue-300 "
@@ -72,16 +91,22 @@ const OrderManagment = () => {
               >
                 <div>
                   <h2 className="p-0 m-0">{orderWCustomer.customer.name}</h2>
-                  <p className="p-0 m-0 text-sm ml-2 text-gray-200">1.1.2023</p>
+                  <p className="p-0 m-0 text-sm ml-2 text-gray-200">
+                    {formatDate(orderWCustomer.created_at)}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
         </div>
         <div className="bg-white flex-1 shadow-2xl py-7  rounded-r-3xl ">
-          <p className="font-medium mt-2 mr-7 text-3xl pl-11 bg-gray-700 text-white p-6 rounded-r-2xl">
-            Order details
-          </p>
+          <div className="flex justify-between font-medium mt-2 mr-7 text-3xl pl-11 bg-gray-700 text-white p-6 rounded-r-2xl">
+            <p>Order details</p>
+            <div className="flex gap-2">
+              <Button className="h-max bg-red-500">Cancele order</Button>
+              <Button className="h-max bg-green-500">Confirm order</Button>
+            </div>
+          </div>
 
           <div className="flex flex-col ">
             <div className="flex flex-1 flex-col mx-5 mt-2 text-white">
@@ -111,8 +136,12 @@ const OrderManagment = () => {
                 </div>
                 <div className="bg-black flex-1 shadow-xl p-3 rounded-3xl flex flex-col justify-center">
                   <p className="text-center font-semibold">Total</p>
-                  <p className="font-medium text-4xl mt-2 text-center">
-                    ${320}
+                  <p
+                    className={`${
+                      total.toString().length > 6 ? "text-2xl" : "text-3xl"
+                    } font-medium mt-2 text-center`}
+                  >
+                    ${total.toFixed(2)}
                   </p>
                 </div>
               </div>

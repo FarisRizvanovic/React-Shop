@@ -80,7 +80,7 @@ const ProductManagment = () => {
                   )
                 : handleChangeSelectedOptionItemClick(e.target.textContent)
             }
-            className="rounded-none mt-1 text-sm bg-blue-500"
+            className=" mt-1 text-sm bg-blue-500"
           >
             {currentSelectedOption === "Products Managment Table"
               ? "Add a new product"
@@ -94,7 +94,7 @@ const ProductManagment = () => {
             onClick={(e) =>
               handleChangeSelectedOptionItemClick(e.target.textContent)
             }
-            className="rounded-none mt-1 text-sm bg-green-500"
+            className=" mt-1 text-sm bg-green-500"
           >
             Category managment
           </Button>
@@ -108,7 +108,7 @@ const ProductManagment = () => {
             onClick={(e) =>
               handleChangeSelectedOptionItemClick(e.target.textContent)
             }
-            className="rounded-none mt-1 text-sm bg-red-500"
+            className=" mt-1 text-sm bg-red-500"
           >
             View products low on stock
           </Button>
