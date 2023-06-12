@@ -31,6 +31,14 @@ export async function getCategoryCount() {
   return categoryCount;
 }
 
+export async function categoriesWithNumberOfItems() {
+  const categories = await axios.get(
+    `http://localhost:5108/api/Category/GetCategoriesWithNumberOfProducts`
+  );
+
+  return categories;
+}
+
 export async function getProductsLowOnStock() {
   const limit = 5;
   const lowOnStock = await axios.get(

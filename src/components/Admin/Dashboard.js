@@ -23,34 +23,20 @@ const Dashboard = () => {
         <div className="bg-blue-400 flex-1 shadow-xl p-7 rounded-3xl">
           <p className="">Total Products</p>
           <p className="font-medium mt-2 text-3xl ml-4">{productCount}</p>
-          {/* <Button className="rounded-none mt-1 text-sm bg-blue-500">
-            Add a new product
-          </Button> */}
         </div>
         <div className="bg-green-400 flex-1 shadow-xl p-7 rounded-3xl">
           <p className="">Total Categories</p>
           <p className="font-medium mt-2 text-3xl ml-4">{categoryCount}</p>
-          {/* <Button className="rounded-none mt-1 text-sm bg-green-500">
-            Category managment
-          </Button> */}
         </div>
         <div className="bg-red-400 flex-1 shadow-xl p-7 rounded-3xl">
           <p className="">Products Low On Stock</p>
           <p className="font-medium mt-2 text-3xl ml-4">
             {productsLowOnStockCount}
           </p>
-          {/* <Button className="rounded-none mt-1 text-sm bg-red-500">
-            View products low on stock
-          </Button> */}
         </div>
         <div className="bg-gray-700 flex-1 shadow-xl p-7 rounded-3xl">
           <p className="">New orders</p>
           <p className="font-medium mt-2 text-3xl ml-4">{4}</p>
-
-          {/* <Button className="rounded-none mt-1 text-sm bg-yellow-500">
-            View orders
-          </Button> */}
-
           <div className="mb-4"></div>
         </div>
       </div>

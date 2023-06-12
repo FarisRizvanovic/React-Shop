@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import CategoryTable from "./CategoryTable";
+import { categoriesWithNumberOfItems } from "../../api/Api";
+import { toast } from "react-toastify";
 
 const AddANewCatrgory = () => {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const getCategoriesData = async () => {
+      try {
+        const response = await categoriesWithNumberOfItems();
+        const data = response.data;
+        setCategories(data);
+      } catch {
+        toast.error("Couldn't get categories.");
+      }
+    };
+    getCategoriesData();
+  }, []);
+
   return (
     <div>
-      <h2 className="text-3xl font-bold text-green-500 text-center">
-        Category Managment
-      </h2>
+      <CategoryTable categories={categories} />
     </div>
   );
 };

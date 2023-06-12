@@ -19,7 +19,6 @@ const OrderManagment = () => {
         setOrdersWCustomers(data);
         setCurrentOrderId(data[0].order_id);
         setCurrentCustomer(data[0].customer);
-        console.log(data);
       } catch {
         toast.error("Couldn't get the orders.");
       }
@@ -68,7 +67,6 @@ const OrderManagment = () => {
       productTotal += product.price;
     });
     setTotal(productTotal);
-    console.log(total.toString.length);
   }, [products]);
 
   return (
@@ -99,17 +97,17 @@ const OrderManagment = () => {
             ))}
           </div>
         </div>
-        <div className="bg-white flex-1 shadow-2xl py-7  rounded-r-3xl ">
+        <div className="bg-white flex-1 shadow-2xl py-7 rounded-r-3xl ">
           <div className="flex justify-between font-medium mt-2 mr-7 text-3xl pl-11 bg-gray-700 text-white p-6 rounded-r-2xl">
             <p>Order details</p>
             <div className="flex gap-2">
-              <Button className="h-max bg-red-500">Cancele order</Button>
+              <Button className="h-max bg-red-500">Cancel order</Button>
               <Button className="h-max bg-green-500">Confirm order</Button>
             </div>
           </div>
 
-          <div className="flex flex-col ">
-            <div className="flex flex-1 flex-col mx-5 mt-2 text-white">
+          <div className="flex flex-col">
+            <div className="flex flex-1 flex-col mx-5 mt-4 text-white">
               <div className="flex gap-5 justify-between">
                 <div className="bg-blue-400 flex-1 shadow-xl p-3 rounded-3xl flex flex-col justify-center ">
                   <p className="text-center font-semibold">Customer</p>
