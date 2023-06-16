@@ -38,8 +38,8 @@ export default function ProductsManagmentTable() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await productsData();
-        const products = response.data;
+        const response = await productsData(1, "");
+        const products = response.data.items;
 
         setProducts(products);
       } catch (error) {}

@@ -10,7 +10,7 @@ const Home = () => {
   const data = useLoaderData();
 
   useEffect(() => {
-    setProducts(data.data);
+    setProducts(data.data.items);
   }, [data]);
 
   return (

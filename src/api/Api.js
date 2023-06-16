@@ -1,48 +1,45 @@
 import axios from "axios";
 const host = "http://localhost:5108";
 
-export async function productsData() {
-  const products = await axios.get(host + "/api/Products/GetProducts");
+export async function productsData(page, searchTerm) {
+  const products = await axios.get(host + `/products/${page}/${searchTerm}`);
+
+  console.log(products);
   return products;
 }
 
 export async function categoriesData() {
-  const categories = await axios.get(host + "/api/Category/GetCategories");
+  const categories = await axios.get(host + "/categories");
   return categories;
 }
 
 export async function addANewProduct(formData) {
-  const addANewProductRequest = await axios.post(
-    host + "/api/Products/AddProduct",
-    formData
-  );
+  const addANewProductRequest = await axios.post(host + "/products", formData);
   return addANewProductRequest;
 }
 
 export async function getProductCount() {
-  const productCount = await axios.get(host + "/api/Products/GetProductCount");
+  const productCount = await axios.get(host + "/products/count");
   return productCount;
 }
 
 export async function getCategoryCount() {
-  const categoryCount = await axios.get(
-    host + "/api/Category/GetCategoryCount"
-  );
+  const categoryCount = await axios.get(host + "/categories/count");
   return categoryCount;
 }
 
-export async function categoriesWithNumberOfItems() {
+export async function categoriesWithNumberOfItems(page, searchTerm) {
   const categories = await axios.get(
-    `http://localhost:5108/api/Category/GetCategoriesWithNumberOfProducts`
+    `http://localhost:5108/categories/itemcount/${page}/${searchTerm}`
   );
 
   return categories;
 }
 
-export async function getProductsLowOnStock() {
+export async function getProductsLowOnStock(page, searchTerm) {
   const limit = 5;
   const lowOnStock = await axios.get(
-    `${host}/api/Products/GetProductsLowOnStock/products/lowonstock/limit=${limit}`
+    `${host}/products/lowonstock/${limit}/${page}/${searchTerm}`
   );
   return lowOnStock;
 }
@@ -50,7 +47,7 @@ export async function getProductsLowOnStock() {
 export async function getProductsLowOnStockCount() {
   const limit = 5;
   const lowOnStockCount = await axios.get(
-    `${host}/api/Products/GetProductsLowOnStockCount/products/lowonstockcount/limit=${limit}`
+    `${host}/products/lowonstock/count/${limit}`
   );
   return lowOnStockCount;
 }
@@ -81,8 +78,10 @@ export async function getProductManagmentInitialData() {
   };
 }
 
-export async function getUsers() {
-  const users = await axios.get("http://localhost:5108/api/User/GetUsers");
+export async function getUsers(page, searchTerm) {
+  const users = await axios.get(
+    `http://localhost:5108/users/${page}/${searchTerm}`
+  );
 
   return users;
 }
@@ -118,20 +117,23 @@ export async function GetCustomerById(customerId) {
   return customer;
 }
 
-export async function orderItemsForOrderId(orderId) {
-  const orderItems =
-    await axios.get(`http://localhost:5108/api/OrderItems/GetOrderItems/orderitems/orderid=${orderId}
-  `);
+export async function orderItemsForOrderId(orderId, page) {
+  const orderItems = await axios.get(
+    `http://localhost:5108/orderitems/${page}/${orderId}`
+  );
 
   return orderItems;
 }
 
-export async function productsForOrderId(orderId) {
-  const ordersItemsResponse = await orderItemsForOrderId(orderId);
-  const orders = ordersItemsResponse.data;
+export async function productsForOrderId(orderId, page) {
+  const ordersItemsResponse = await orderItemsForOrderId(orderId, page);
+  const orders = ordersItemsResponse.data.items;
   const productsForOrderId = await Promise.all(
     orders.map(async (order) => {
       const product = await productById(order.product_id);
+
+      console.log(order);
+
       return { ...order, ...product.data };
     })
   );
@@ -141,7 +143,7 @@ export async function productsForOrderId(orderId) {
 
 export async function productById(productId) {
   const product = await axios.get(
-    `http://localhost:5108/api/Products/GetProductById/product/id=${productId} `
+    `http://localhost:5108/product/${productId} `
   );
   return product;
 }

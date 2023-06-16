@@ -47,6 +47,8 @@ const Layout = () => {
   );
 };
 
+const productDataLoader = () => productsData(1, "");
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -56,7 +58,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-        loader: productsData,
+        loader: productDataLoader,
       },
       {
         path: "/product/:id",
@@ -69,7 +71,7 @@ const router = createBrowserRouter([
       {
         path: "/shop",
         element: <Shop />,
-        loader: productsData,
+        loader: productDataLoader,
       },
       {
         path: "/admin",

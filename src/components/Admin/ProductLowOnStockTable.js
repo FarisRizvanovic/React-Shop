@@ -38,9 +38,9 @@ export default function ProductLowOnStockTable() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await getProductsLowOnStock();
-        const products = response.data;
-        console.log(products);
+        const response = await getProductsLowOnStock(1, "");
+        const products = response.data.items;
+
         setProducts(products);
       } catch (error) {}
     };

@@ -3,16 +3,18 @@ import CategoryTable from "./CategoryTable";
 import { categoriesWithNumberOfItems } from "../../api/Api";
 import { toast } from "react-toastify";
 
-const AddANewCatrgory = () => {
+const AddANewCategory = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const getCategoriesData = async () => {
       try {
-        const response = await categoriesWithNumberOfItems();
-        const data = response.data;
+        const response = await categoriesWithNumberOfItems(1, "");
+        const data = response.data.items;
+        console.log(response);
         setCategories(data);
-      } catch {
+      } catch (e) {
+        console.log(e);
         toast.error("Couldn't get categories.");
       }
     };
@@ -26,4 +28,4 @@ const AddANewCatrgory = () => {
   );
 };
 
-export default AddANewCatrgory;
+export default AddANewCategory;

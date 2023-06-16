@@ -28,7 +28,7 @@ export default function CategoryTable({ categories }) {
         <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Categories
+              All Categories
             </Typography>
             <Typography className="mt-1 font-normal text-gray-500">
               List of all categories and their details
@@ -79,8 +79,6 @@ export default function CategoryTable({ categories }) {
           </thead>
           <tbody>
             {categories.map((category, index) => {
-              if (category.name === "All Categories") return null;
-
               const isLast = index === category.length - 1;
               const classes = isLast
                 ? "p-4"
@@ -114,17 +112,21 @@ export default function CategoryTable({ categories }) {
                     </Typography>
                   </td>
                   {/* Edit */}
-                  <td className={classes + " flex justify-center"}>
-                    <Tooltip content="Edit Category" className="p-2 ">
-                      <IconButton
-                        variant="text"
-                        color="blue-gray"
-                        className="flex items-center justify-center "
-                      >
-                        <PencilIcon className="h-4 w-4" />
-                      </IconButton>
-                    </Tooltip>
-                  </td>
+                  {category.name === "All Categories" ? (
+                    <div></div>
+                  ) : (
+                    <td className={classes + " flex justify-center"}>
+                      <Tooltip content="Edit Category" className="p-2 ">
+                        <IconButton
+                          variant="text"
+                          color="blue-gray"
+                          className="flex items-center justify-center "
+                        >
+                          <PencilIcon className="h-4 w-4" />
+                        </IconButton>
+                      </Tooltip>
+                    </td>
+                  )}
                 </tr>
               );
             })}

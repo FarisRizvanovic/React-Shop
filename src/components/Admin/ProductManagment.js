@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AddNewProduct from "./AddNewProduct";
 import ProductsManagmentTable from "./ProductsManagmentTable";
-import AddANewCatrgory from "./AddANewCatrgory";
+import AddANewCategory from "./AddANewCategory";
 import ProductsLowOnStock from "./ProductsLowOnStock";
 import { Button } from "@material-tailwind/react";
 import {
@@ -121,7 +121,7 @@ const ProductManagment = () => {
         ) : currentSelectedOption === "Add a new product" ? (
           <AddNewProduct onNewProductAdded={reloadCountData} />
         ) : currentSelectedOption === "Category managment" ? (
-          <AddANewCatrgory />
+          <AddANewCategory />
         ) : (
           <ProductsLowOnStock />
         )}

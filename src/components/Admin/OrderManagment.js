@@ -46,7 +46,7 @@ const OrderManagment = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await productsForOrderId(currentOrderId);
+        const response = await productsForOrderId(1, currentOrderId);
 
         setProducts(response);
       } catch (error) {}

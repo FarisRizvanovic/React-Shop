@@ -9,7 +9,7 @@ const Shop = () => {
   const data = useLoaderData();
 
   useEffect(() => {
-    setProducts(data.data);
+    setProducts(data.data.items);
   }, [data]);
   const categoriesRef = useRef(null);
   const productsRef = useRef(null);

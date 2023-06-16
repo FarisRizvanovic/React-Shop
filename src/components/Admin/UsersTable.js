@@ -35,8 +35,8 @@ export default function UsersTable() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await getUsers();
-        const users = response.data;
+        const response = await getUsers(1, "");
+        const users = response.data.items;
 
         setUsers(users);
       } catch (error) {}
