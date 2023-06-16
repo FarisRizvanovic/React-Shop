@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import ShopProducts from "../components/ShopProducts";
 import { useLoaderData } from "react-router-dom";
 import Categories from "../components/Categories";
+import { getProductsByCategoryId, productsData } from "../api/Api";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
@@ -28,6 +29,22 @@ const Shop = () => {
     }
   };
 
+  const searchProducts = async (searchTerm, categoryId) => {
+    console.log(searchTerm);
+    console.log(categoryId);
+    try {
+      let response;
+      if (categoryId !== 1) {
+        response = await getProductsByCategoryId(categoryId, searchTerm, 1);
+      } else {
+        response = await productsData(1, searchTerm);
+      }
+      const data = response.data.items;
+
+      setProducts(data);
+    } catch {}
+  };
+
   return (
     <div>
       <div className="flex h-screen">
@@ -37,12 +54,13 @@ const Shop = () => {
           onMouseEnter={handleCategoriesHover}
           onMouseLeave={handleCategoriesHover}
         >
-          <Categories />
+          <Categories searchCallback={searchProducts} />
           <span className="h-screen w-[2px] bg-gray-300"></span>
         </div>
 
         <div
           className="w-5/6 bg-gray-100 px-10 no-scrollbar"
+          s
           ref={productsRef}
           onMouseEnter={handleProductsHover}
           onMouseLeave={handleProductsHover}

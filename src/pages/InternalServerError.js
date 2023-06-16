@@ -5,7 +5,7 @@ const InternalServerError = () => {
     <div className="h-screen flex justify-center  relative">
       <div className="absolute top-72">
         <h2 className="text-2xl font-semibold h-min ">
-          <span className="text-red-600">404</span> | Internal server error.
+          <span className="text-red-600">500</span> | Internal server error.
         </h2>
         <p
           onClick={() => window.location.reload()}

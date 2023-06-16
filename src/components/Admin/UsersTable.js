@@ -15,9 +15,11 @@ import {
   IconButton,
   Tooltip,
   Input,
+  useTabs,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { getUsers } from "../../api/Api";
+import { toast } from "react-toastify";
 
 const TABLE_HEAD = [
   "Profile picture",
@@ -31,18 +33,34 @@ const defaultProfilePicture = "http://localhost:5108/Resources/user.jpeg";
 
 export default function UsersTable() {
   const [users, setUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await getUsers(1, "");
-        const users = response.data.items;
-
-        setUsers(users);
-      } catch (error) {}
-    };
-    fetchUsers();
+    fetchUsers("");
   }, []);
+
+  const fetchUsers = async (searchTerm) => {
+    try {
+      const response = await getUsers(page, searchTerm);
+      const users = response.data.items;
+      setTotalPages(response.data.totalPages);
+      setUsers(users);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    if (page <= totalPages) {
+      fetchUsers(searchTerm);
+    }
+  }, [page]);
+
+  useEffect(() => {
+    if (searchTerm === "") {
+      fetchUsers("");
+    }
+  }, [searchTerm]);
 
   return (
     <Card className="h-full w-full">
@@ -57,15 +75,32 @@ export default function UsersTable() {
             </Typography>
           </div>
           <div className="flex w-full shrink-0 gap-2 md:w-max">
+            <div className="flex items-center"></div>
             <div className="w-full relative flex items-center justify-center">
               <input
                 type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Start typing..."
                 className="pl-4 pr-10 py-2 rounded-lg border border-gray-400 focus:outline-none focus:ring focus:border-blue-400"
               />
-              <MagnifyingGlassIcon className="absolute right-2 h-6 w-6 text-gray-400" />
+              {searchTerm.length > 0 ? (
+                <p
+                  className="absolute right-3 cursor-pointer text-gray-400 hover:text-black duration-200"
+                  onClick={() => fetchUsers("") & setSearchTerm("")}
+                >
+                  x
+                </p>
+              ) : (
+                <MagnifyingGlassIcon className="absolute right-2 h-6 w-6 text-gray-400" />
+              )}
             </div>
-            <Button color="blue" size="sm" className="w-full">
+            <Button
+              color="blue"
+              size="sm"
+              className="w-full"
+              onClick={() => fetchUsers(searchTerm)}
+            >
               Search
             </Button>
           </div>
@@ -183,7 +218,12 @@ export default function UsersTable() {
         </table>
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Button variant="outlined" color="blue-gray" size="sm">
+        <Button
+          variant="outlined"
+          color="blue-gray"
+          size="sm"
+          onClick={() => setPage(page === 1 ? 1 : page - 1)}
+        >
           Previous
         </Button>
         <div className="flex items-center gap-2">
@@ -193,26 +233,27 @@ export default function UsersTable() {
             size="sm"
             className="flex items-center justify-center"
           >
-            1
+            {page}
           </IconButton>
-          <IconButton
+          {/* <IconButton
             variant="text"
             color="blue-gray"
             size="sm"
             className="flex items-center justify-center"
           >
             2
-          </IconButton>
-          <IconButton
-            variant="text"
-            color="blue-gray"
-            size="sm"
-            className="flex items-center justify-center"
-          >
-            3
-          </IconButton>
+          </IconButton> */}
+
+          <p className="text-gray-400">
+            / {totalPages == 0 ? "1" : totalPages}
+          </p>
         </div>
-        <Button variant="outlined" color="blue-gray" size="sm">
+        <Button
+          variant="outlined"
+          color="blue-gray"
+          size="sm"
+          onClick={() => setPage(page == totalPages ? page : page + 1)}
+        >
           Next
         </Button>
       </CardFooter>

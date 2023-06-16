@@ -6,8 +6,18 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 
-const Categories = () => {
+const Categories = ({ searchCallback }) => {
   const [categories, setCategories] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedMenuItem, setSelectedMenuItem] = useState("All Categories");
+
+  useEffect(() => {
+    try {
+      const category = categories.find((c) => c.name === selectedMenuItem);
+      const categoryId = category.category_id;
+      searchCallback(searchTerm, categoryId);
+    } catch {}
+  }, [searchTerm, selectedMenuItem]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -23,8 +33,6 @@ const Categories = () => {
     fetchCategories();
   }, []);
 
-  const [selectedMenuItem, setSelectedMenuItem] = useState("All Categories");
-
   const handleMenuItemClick = (menuItem) => {
     setSelectedMenuItem(menuItem);
   };
@@ -34,6 +42,8 @@ const Categories = () => {
       <div className="w-full relative flex items-center justify-center p-4 text-black">
         <input
           type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Start typing..."
           className="pl-2 pr-6 w-full py-2 rounded-lg border border-gray-400 focus:outline-none focus:ring focus:border-blue-400"
         />

@@ -3,8 +3,6 @@ const host = "http://localhost:5108";
 
 export async function productsData(page, searchTerm) {
   const products = await axios.get(host + `/products/${page}/${searchTerm}`);
-
-  console.log(products);
   return products;
 }
 
@@ -131,9 +129,6 @@ export async function productsForOrderId(orderId, page) {
   const productsForOrderId = await Promise.all(
     orders.map(async (order) => {
       const product = await productById(order.product_id);
-
-      console.log(order);
-
       return { ...order, ...product.data };
     })
   );
@@ -146,4 +141,12 @@ export async function productById(productId) {
     `http://localhost:5108/product/${productId} `
   );
   return product;
+}
+
+export async function getProductsByCategoryId(categoryId, searchTerm, page) {
+  const products = await axios.get(
+    `http://localhost:5108/products/bycategory/${categoryId}/${page}/${searchTerm}`
+  );
+
+  return products;
 }
