@@ -35,17 +35,35 @@ const hostLink = "http://localhost:5108/";
 export default function ProductsManagmentTable() {
   const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await productsData(1, "");
-        const products = response.data.items;
+  const [searchTerm, setSearchTerm] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-        setProducts(products);
-      } catch (error) {}
-    };
-    fetchProducts();
+  useEffect(() => {
+    fetchProducts("");
   }, []);
+
+  useEffect(() => {
+    if (searchTerm === "") {
+      fetchProducts("");
+    }
+  }, [searchTerm]);
+
+  useEffect(() => {
+    if (page <= totalPages) {
+      fetchProducts(searchTerm);
+    }
+  }, [page]);
+
+  const fetchProducts = async (searchTerm) => {
+    try {
+      const response = await productsData(page, searchTerm);
+      const products = response.data.items;
+
+      setTotalPages(response.data.totalPages);
+      setProducts(products);
+    } catch (error) {}
+  };
 
   return (
     <Card className="h-full w-full">
@@ -63,6 +81,8 @@ export default function ProductsManagmentTable() {
             <div className="w-full relative flex items-center justify-center">
               <input
                 type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Start typing..."
                 className="pl-4 pr-10 py-2 rounded-lg border border-gray-400 focus:outline-none focus:ring focus:border-blue-400"
               />
@@ -209,7 +229,12 @@ export default function ProductsManagmentTable() {
         </table>
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Button variant="outlined" color="blue-gray" size="sm">
+        <Button
+          variant="outlined"
+          color="blue-gray"
+          size="sm"
+          onClick={() => setPage(page === 1 ? 1 : page - 1)}
+        >
           Previous
         </Button>
         <div className="flex items-center gap-2">
@@ -219,26 +244,27 @@ export default function ProductsManagmentTable() {
             size="sm"
             className="flex items-center justify-center"
           >
-            1
+            {page}
           </IconButton>
-          <IconButton
-            variant="text"
+          {/* <IconButton
+            variant="text"~
             color="blue-gray"
             size="sm"
             className="flex items-center justify-center"
           >
             2
-          </IconButton>
-          <IconButton
-            variant="text"
-            color="blue-gray"
-            size="sm"
-            className="flex items-center justify-center"
-          >
-            3
-          </IconButton>
+          </IconButton> */}
+
+          <p className="text-gray-400">
+            / {totalPages == 0 ? "1" : totalPages}
+          </p>
         </div>
-        <Button variant="outlined" color="blue-gray" size="sm">
+        <Button
+          variant="outlined"
+          color="blue-gray"
+          size="sm"
+          onClick={() => setPage(page == totalPages ? page : page + 1)}
+        >
           Next
         </Button>
       </CardFooter>
