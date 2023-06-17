@@ -23,7 +23,13 @@ const TABLE_HEAD = ["Product", "Stock", "Quantity", "Price", "Edit"];
 
 const hostLink = "http://localhost:5108/";
 
-export default function OrderDetailsProductsTable({ products }) {
+export default function OrderDetailsProductsTable({
+  products,
+  onPrevious,
+  onNext,
+  page,
+  totalPages,
+}) {
   return (
     <Card className="h-full w-full">
       <CardBody className="px-0">
@@ -121,7 +127,12 @@ export default function OrderDetailsProductsTable({ products }) {
         </table>
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Button variant="outlined" color="blue-gray" size="sm">
+        <Button
+          variant="outlined"
+          color="blue-gray"
+          size="sm"
+          onClick={() => onPrevious()}
+        >
           Previous
         </Button>
         <div className="flex items-center gap-2">
@@ -131,26 +142,27 @@ export default function OrderDetailsProductsTable({ products }) {
             size="sm"
             className="flex items-center justify-center"
           >
-            1
+            {page}
           </IconButton>
-          <IconButton
-            variant="text"
+          {/* <IconButton
+            variant="text"~
             color="blue-gray"
             size="sm"
             className="flex items-center justify-center"
           >
             2
-          </IconButton>
-          <IconButton
-            variant="text"
-            color="blue-gray"
-            size="sm"
-            className="flex items-center justify-center"
-          >
-            3
-          </IconButton>
+          </IconButton> */}
+
+          <p className="text-gray-400">
+            / {totalPages == 0 ? "1" : totalPages}
+          </p>
         </div>
-        <Button variant="outlined" color="blue-gray" size="sm">
+        <Button
+          variant="outlined"
+          color="blue-gray"
+          size="sm"
+          onClick={() => onNext()}
+        >
           Next
         </Button>
       </CardFooter>

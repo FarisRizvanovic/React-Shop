@@ -132,8 +132,15 @@ export async function productsForOrderId(orderId, page) {
       return { ...order, ...product.data };
     })
   );
+  const data = ordersItemsResponse.data;
 
-  return productsForOrderId;
+  return {
+    page: data.page,
+    pageSize: data.pageSize,
+    totalItems: data.totalItems,
+    totalPages: data.totalPages,
+    items: productsForOrderId,
+  };
 }
 
 export async function productById(productId) {

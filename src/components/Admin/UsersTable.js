@@ -14,12 +14,9 @@ import {
   Avatar,
   IconButton,
   Tooltip,
-  Input,
-  useTabs,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { getUsers } from "../../api/Api";
-import { toast } from "react-toastify";
 
 const TABLE_HEAD = [
   "Profile picture",
@@ -236,7 +233,7 @@ export default function UsersTable() {
             {page}
           </IconButton>
           {/* <IconButton
-            variant="text"
+            variant="text"~
             color="blue-gray"
             size="sm"
             className="flex items-center justify-center"

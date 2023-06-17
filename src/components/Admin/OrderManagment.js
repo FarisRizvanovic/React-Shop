@@ -6,10 +6,13 @@ import { Button } from "@material-tailwind/react";
 
 const OrderManagment = () => {
   const [ordersWCustomers, setOrdersWCustomers] = useState([]);
-  const [currentOrderId, setCurrentOrderId] = useState(0);
+  const [currentOrderId, setCurrentOrderId] = useState(1);
   const [currentCustomer, setCurrentCustomer] = useState({});
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
+
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const getOrdersWithCustomers = async () => {
@@ -40,25 +43,28 @@ const OrderManagment = () => {
   };
 
   useEffect(() => {
+    setPage(1);
     getCurrentCustomer();
   }, [currentOrderId]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await productsForOrderId(1, currentOrderId);
-
-        setProducts(response);
-      } catch (error) {}
-    };
     fetchProducts();
-  }, [currentOrderId]);
+  }, [currentOrderId, page]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const formattedDate = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
 
     return formattedDate;
+  };
+
+  const fetchProducts = async () => {
+    try {
+      const response = await productsForOrderId(page, currentOrderId);
+      console.log(response);
+      setProducts(response.items);
+      setTotalPages(response.totalPages);
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -68,6 +74,16 @@ const OrderManagment = () => {
     });
     setTotal(productTotal);
   }, [products]);
+
+  const onPrevious = () => {
+    setPage(page === 1 ? 1 : page - 1);
+    console.log(page);
+  };
+
+  const onNext = () => {
+    setPage(page === totalPages ? page : page + 1);
+    console.log(page);
+  };
 
   return (
     <div className="flex min-h-screen flex-col mx-16 mt-10 mb-16 gap-7 max-w-[90vw]">
@@ -146,7 +162,13 @@ const OrderManagment = () => {
             </div>
 
             <div className="mt-3 flex-1 h-max">
-              <OrderDetailsProductsTable products={products} />
+              <OrderDetailsProductsTable
+                products={products}
+                onPrevious={onPrevious}
+                onNext={onNext}
+                page={page}
+                totalPages={totalPages}
+              />
             </div>
           </div>
         </div>
