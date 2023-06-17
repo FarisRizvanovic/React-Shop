@@ -78,6 +78,7 @@ export default function ProductsManagmentTable() {
             </Typography>
           </div>
           <div className="flex w-full shrink-0 gap-2 md:w-max">
+            <div className="flex items-center"></div>
             <div className="w-full relative flex items-center justify-center">
               <input
                 type="text"
@@ -86,9 +87,23 @@ export default function ProductsManagmentTable() {
                 placeholder="Start typing..."
                 className="pl-4 pr-10 py-2 rounded-lg border border-gray-400 focus:outline-none focus:ring focus:border-blue-400"
               />
-              <MagnifyingGlassIcon className="absolute right-2 h-6 w-6 text-gray-400" />
+              {searchTerm.length > 0 ? (
+                <p
+                  className="absolute right-3 cursor-pointer text-gray-400 hover:text-black duration-200"
+                  onClick={() => fetchProducts("") & setSearchTerm("")}
+                >
+                  x
+                </p>
+              ) : (
+                <MagnifyingGlassIcon className="absolute right-2 h-6 w-6 text-gray-400" />
+              )}
             </div>
-            <Button color="blue" size="sm" className="w-full">
+            <Button
+              color="blue"
+              size="sm"
+              className="w-full"
+              onClick={() => fetchProducts(searchTerm)}
+            >
               Search
             </Button>
           </div>
