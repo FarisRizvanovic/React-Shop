@@ -3,7 +3,7 @@ import CategoryTable from "./CategoryTable";
 import { categoriesWithNumberOfItems } from "../../api/Api";
 import { toast } from "react-toastify";
 
-const AddANewCategory = () => {
+const CategoryManagment = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -23,9 +23,9 @@ const AddANewCategory = () => {
 
   return (
     <div>
-      <CategoryTable categories={categories} />
+      <CategoryTable categories />
     </div>
   );
 };
 
-export default AddANewCategory;
+export default CategoryManagment;

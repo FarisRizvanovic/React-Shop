@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AddNewProduct from "./AddNewProduct";
 import ProductsManagmentTable from "./ProductsManagmentTable";
-import AddANewCategory from "./AddANewCategory";
+import CategoryManagment from "./CategoryManagment";
 import ProductsLowOnStock from "./ProductsLowOnStock";
 import { Button } from "@material-tailwind/react";
 import {
@@ -10,6 +10,7 @@ import {
   getProductsLowOnStockCount,
 } from "../../api/Api";
 import { toast } from "react-toastify";
+import CategoryTable from "./CategoryTable";
 
 const ProductManagment = () => {
   const [currentSelectedOption, setCurrentSelectedOption] = useState(
@@ -121,7 +122,7 @@ const ProductManagment = () => {
         ) : currentSelectedOption === "Add a new product" ? (
           <AddNewProduct onNewProductAdded={reloadCountData} />
         ) : currentSelectedOption === "Category managment" ? (
-          <AddANewCategory />
+          <CategoryTable />
         ) : (
           <ProductsLowOnStock />
         )}
