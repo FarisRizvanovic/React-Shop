@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ordersWithCustomers, productsForOrderId } from "../../api/Api";
 import { toast } from "react-toastify";
 import OrderDetailsProductsTable from "./OrderDetailsProductsTable";
@@ -14,11 +14,14 @@ const OrderManagment = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  const [totalOrders, setTotalOrders] = useState(0);
+
   useEffect(() => {
     const getOrdersWithCustomers = async () => {
       try {
         const request = await ordersWithCustomers();
         const data = request;
+        setTotalOrders(data.length);
         setOrdersWCustomers(data);
         setCurrentOrderId(data[0].order_id);
         setCurrentCustomer(data[0].customer);
@@ -84,36 +87,81 @@ const OrderManagment = () => {
     setPage(page === totalPages ? page : page + 1);
     console.log(page);
   };
+  // TESTING
 
+  const containerRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startY, setStartY] = useState(null);
+  const [scrollTop, setScrollTop] = useState(0);
+
+  useEffect(() => {
+    const container = containerRef.current;
+
+    const handleMouseDown = (event) => {
+      setIsDragging(true);
+      setStartY(event.pageY - container.offsetTop);
+      setScrollTop(container.scrollTop);
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    const handleMouseMove = (event) => {
+      if (!isDragging) return;
+      event.preventDefault();
+      const y = event.pageY - container.offsetTop;
+      const scroll = y - startY;
+      container.scrollTop = scrollTop - scroll;
+    };
+
+    container.addEventListener("mousedown", handleMouseDown);
+    container.addEventListener("mouseup", handleMouseUp);
+    container.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      container.removeEventListener("mousedown", handleMouseDown);
+      container.removeEventListener("mouseup", handleMouseUp);
+      container.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [isDragging, startY, scrollTop]);
+  // TESTING
   return (
     <div className="flex min-h-screen flex-col mx-16 mt-10 mb-16 gap-7 max-w-[90vw]">
+      {/* Order list */}
       <div className="flex gap-4 min-h-screen  ">
-        <div className="bg-white flex-2 shadow-2xl pt-7 pl-7 rounded-l-3xl w-72 overflow-scroll overflow-x-hidden no-scrollbar">
-          <p className="font-medium mt-2 text-3xl bg-gray-700 text-white py-6 pl-7  rounded-l-2xl">
-            Orders
+        <div className="bg-white flex-2 shadow-2xl pt-7  rounded-l-3xl w-72 h-fit">
+          <p className="font-medium mt-2 ml-6 text-3xl bg-gray-700 text-white py-6 pl-7  rounded-l-2xl">
+            Orders ({totalOrders})
           </p>
-          <div className="flex flex-col gap-3 mt-7">
-            {ordersWCustomers.map((orderWCustomer) => (
-              <div
-                key={orderWCustomer.order_id}
-                onClick={() => setCurrentOrderId(orderWCustomer.order_id)}
-                className={`flex items-center shadow-2xl cursor-pointer  ${
-                  orderWCustomer.order_id === currentOrderId
-                    ? "rounded-l-2xl bg-blue-400 "
-                    : " mr-7 rounded-2xl bg-blue-300 "
-                }  p-4  text-white font-semibold hover:bg-blue-400 duration-200`}
-              >
-                <div>
-                  <h2 className="p-0 m-0">{orderWCustomer.customer.name}</h2>
-                  <p className="p-0 m-0 text-sm ml-2 text-gray-200">
-                    {formatDate(orderWCustomer.created_at)}
-                  </p>
+          <div
+            className="overflow-scroll overflow-x-hidden no-scrollbar max-h-96"
+            ref={containerRef}
+          >
+            <div className="flex flex-col gap-3 pt-7 mb-4 pl-9">
+              {ordersWCustomers.map((orderWCustomer) => (
+                <div
+                  key={orderWCustomer.order_id}
+                  onClick={() => setCurrentOrderId(orderWCustomer.order_id)}
+                  className={`flex items-center shadow-2xl cursor-pointer  ${
+                    orderWCustomer.order_id === currentOrderId
+                      ? "rounded-l-2xl bg-blue-400 "
+                      : " mr-7 rounded-2xl bg-blue-300 "
+                  }  p-4  text-white font-semibold hover:bg-blue-400 duration-200`}
+                >
+                  <div>
+                    <h2 className="p-0 m-0">{orderWCustomer.customer.name}</h2>
+                    <p className="p-0 m-0 text-sm ml-2 text-gray-200">
+                      {formatDate(orderWCustomer.created_at)}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-        <div className="bg-white flex-1 shadow-2xl py-7 rounded-r-3xl ">
+        {/* Order details */}
+        <div className="bg-white flex-1 shadow-2xl py-7 rounded-r-3xl rounded-bl-3xl ">
           <div className="flex justify-between font-medium mt-2 mr-7 text-3xl pl-11 bg-gray-700 text-white p-6 rounded-r-2xl">
             <p>Order details</p>
             <div className="flex gap-2">

@@ -157,3 +157,8 @@ export async function getProductsByCategoryId(categoryId, searchTerm, page) {
 
   return products;
 }
+
+export async function addOrder(orderRequest) {
+  const request = axios.post(`http://localhost:5108/orders/add`, orderRequest);
+  return request;
+}

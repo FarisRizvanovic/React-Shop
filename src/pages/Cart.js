@@ -2,14 +2,19 @@ import React, { useEffect, useState } from "react";
 import { logoDark, cart } from "../assets/index";
 import CartItem from "../components/CartItems";
 import { Button } from "bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { HiOutlineArrowLeft } from "react-icons/hi";
+import { addOrder } from "../api/Api";
+import { resetCart } from "../redux/bazarSlice";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const productData = useSelector((state) => state.bazar.productData);
   const [totalAmmount, setTotalAmmout] = useState("");
   const [showEmpty, setShowEmpty] = useState(true);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log(productData);
@@ -25,7 +30,31 @@ const Cart = () => {
       return price;
     });
     setTotalAmmout(price.toFixed(2));
+    console.log(productData);
   }, [productData]);
+
+  const procedToCheckout = async () => {
+    try {
+      const orderRequest = {
+        customerId: 5,
+        totalAmmout: totalAmmount,
+        status: "pending",
+        orderItems: productData.map((product) => ({
+          productId: product.product_id,
+          quantity: product.quantity,
+          price: product.price,
+        })),
+      };
+
+      await addOrder(orderRequest).then(() => {
+        dispatch(resetCart());
+        toast.success("Successfully proceeded to checkout.");
+      });
+    } catch {
+      toast.error("Something went wrong.");
+    }
+  };
+
   return (
     <div>
       <img
@@ -58,7 +87,10 @@ const Cart = () => {
               {" "}
               Total <span className="text-xl font-bold">${totalAmmount}</span>
             </p>
-            <button className="w-full text-base bg-black text-white py-3 mt-6 hover:bg-gray-800 duration-300">
+            <button
+              onClick={() => procedToCheckout()}
+              className="w-full text-base bg-black text-white py-3 mt-6 hover:bg-gray-800 duration-300"
+            >
               Proceed to checkout
             </button>
           </div>

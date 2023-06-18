@@ -38,7 +38,7 @@ const Categories = ({ searchCallback }) => {
   };
 
   return (
-    <div className="bg-gray-900 text-white w-full text-sm h-screen">
+    <div className="bg-gray-900 text-white text-sm h-full w-max  border-r-2 border-gray-300">
       <div className="w-full relative flex items-center justify-center p-4 text-black">
         <input
           type="text"
@@ -49,17 +49,19 @@ const Categories = ({ searchCallback }) => {
         />
         <MagnifyingGlassIcon className="absolute right-5 h-6 w-6 text-gray-400" />
       </div>
-      <ul className="flex flex-col p-4">
-        {categories.map((item) => (
-          <li className="mb-4" key={item.category_id}>
-            <SidebarItem
-              text={item.name}
-              onItemClick={handleMenuItemClick}
-              selectedMenuItem={selectedMenuItem}
-            />
-          </li>
-        ))}
-      </ul>
+      <div className=" h-max ">
+        <ul className="flex flex-col p-4 ">
+          {categories.map((item) => (
+            <li className="mb-4" key={item.category_id}>
+              <SidebarItem
+                text={item.name}
+                onItemClick={handleMenuItemClick}
+                selectedMenuItem={selectedMenuItem}
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

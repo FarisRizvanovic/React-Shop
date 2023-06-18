@@ -38,7 +38,7 @@ const ProductsCard = ({ product }) => {
             </h2>
           </div>
           <div className="flex justify-end gap-2 relative overflow-hidden w-28 text-sm">
-            <div className="flex gap-2 transform group-hover:translate-x-24 transition-transform duration-500">
+            <div className="flex gap-2 transform group-hover:translate-x-36 transition-transform duration-500">
               <p className="line-through text-gray-500">${product.oldPrice}</p>
               <p className="font-semibold text-green-600">${product.price}</p>
             </div>
