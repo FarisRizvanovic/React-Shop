@@ -12,6 +12,7 @@ const Cart = () => {
   const [showEmpty, setShowEmpty] = useState(true);
 
   useEffect(() => {
+    console.log(productData);
     if (productData.length > 0) {
       setShowEmpty(false);
     }

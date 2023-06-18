@@ -16,7 +16,6 @@ const ProductManagment = () => {
   const [currentSelectedOption, setCurrentSelectedOption] = useState(
     "Products Managment Table"
   );
-
   const [productCount, setProductCount] = useState(0);
   const [categoryCount, setCategoryCount] = useState(0);
   const [productsLowOnStockCount, setProductsLowOnStockCount] = useState(0);
@@ -31,6 +30,7 @@ const ProductManagment = () => {
     try {
       const productCountResonse = await getProductCount();
       const productCount = productCountResonse.data;
+
       setProductCount(productCount);
     } catch {
       toast.error("Couldn't get the number of products.");

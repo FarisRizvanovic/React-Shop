@@ -24,13 +24,13 @@ const CartItem = () => {
       <div>
         {productData.map((item) => (
           <div
-            key={item._id}
+            key={item.product_id}
             className="flex items-center justify-between gap-6 mt-6 bg-[#fafafa] p-5"
           >
             <div className="flex items-center gap-2">
               <MdOutlineClose
                 onClick={() =>
-                  dispatch(deleteItem(item._id)) &
+                  dispatch(deleteItem(item.product_id)) &
                   toast.error(`${item.title} is removed.`)
                 }
                 className="text-xl text-gray-600 hover:text-red-600 cursor-pointer duration-300"
@@ -48,7 +48,7 @@ const CartItem = () => {
               <p className="text-sm">Quantity</p>
               <div className="flex items-center gap-4 text-sm font-semibold">
                 <span
-                  onClick={() => dispatch(decrementQuantity(item._id))}
+                  onClick={() => dispatch(decrementQuantity(item.product_id))}
                   className="border h-5 font-normal text-lg flex items-center justify-center 
                   px-2 hover:bg-gray-700 hover::text-white cursor-pointer duration-300 active:bg-black"
                 >
@@ -56,7 +56,7 @@ const CartItem = () => {
                 </span>
                 {item.quantity}
                 <span
-                  onClick={() => dispatch(incrementQuantity(item._id))}
+                  onClick={() => dispatch(incrementQuantity(item.product_id))}
                   className="border h-5 font-normal text-lg flex items-center justify-center 
                   px-2 hover:bg-gray-700 hover::text-white cursor-pointer duration-300 active:bg-black"
                 >

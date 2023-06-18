@@ -82,12 +82,17 @@ const Product = () => {
               onClick={() =>
                 dispatch(
                   addToCart({
-                    _id: details._id,
+                    product_id: details.product_id,
+                    category_id: details.category_id,
                     title: details.title,
-                    image: details.image,
-                    price: details.price,
-                    quantity: baseQuantity,
+                    isNew: details.isNew,
                     description: details.description,
+                    rating: details.rating,
+                    stock: details.stock,
+                    oldPrice: details.oldPrice,
+                    price: details.price,
+                    image: details.image,
+                    quantity: baseQuantity,
                   })
                 ) & toast.success(`${details.title} added to cart.`)
               }

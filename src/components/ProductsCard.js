@@ -11,7 +11,7 @@ const ProductsCard = ({ product }) => {
   const hostLink = "http://localhost:5108/";
 
   const handleDetails = () => {
-    navigate(`/product/${product._id}`, {
+    navigate(`/product/${product.product_id}`, {
       state: {
         item: product,
       },
@@ -46,12 +46,17 @@ const ProductsCard = ({ product }) => {
               onClick={() =>
                 dispatch(
                   addToCart({
-                    _id: product._id,
+                    product_id: product.product_id,
+                    category_id: product.category_id,
                     title: product.title,
-                    image: product.image,
-                    price: product.price,
-                    quantity: 1,
+                    isNew: product.isNew,
                     description: product.description,
+                    rating: product.rating,
+                    stock: product.stock,
+                    oldPrice: product.oldPrice,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1,
                   })
                 ) & toast.success(`${product.title} added to cart.`)
               }

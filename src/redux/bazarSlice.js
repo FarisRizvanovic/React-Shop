@@ -11,7 +11,7 @@ export const bazarSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const item = state.productData.find(
-        (item) => item._id === action.payload._id
+        (item) => item.product_id === action.payload.product_id
       );
       if (item) {
         item.quantity += action.payload.quantity;
@@ -21,7 +21,7 @@ export const bazarSlice = createSlice({
     },
     deleteItem: (state, action) => {
       state.productData = state.productData.filter(
-        (item) => item._id !== action.payload
+        (item) => item.product_id !== action.payload
       );
     },
     resetCart: (state) => {
@@ -29,7 +29,7 @@ export const bazarSlice = createSlice({
     },
     incrementQuantity: (state, action) => {
       const item = state.productData.find(
-        (item) => item._id === action.payload
+        (item) => item.product_id === action.payload
       );
 
       if (item) {
@@ -38,9 +38,9 @@ export const bazarSlice = createSlice({
     },
     decrementQuantity: (state, action) => {
       const item = state.productData.find(
-        (item) => item._id === action.payload
+        (item) => item.product_id === action.payload
       );
-      if (item.quantity >= 1) {
+      if (item.quantity > 1) {
         item.quantity--;
       } else {
         item.quantity = 1;
