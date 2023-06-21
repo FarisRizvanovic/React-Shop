@@ -11,6 +11,7 @@ import {
   CardBody,
   Chip,
   CardFooter,
+  DeleteIcon,
   Avatar,
   IconButton,
   Tooltip,
@@ -18,6 +19,7 @@ import {
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { productsData, productsForOrderId } from "../../api/Api";
+import { FaTrash } from "react-icons/fa";
 
 const TABLE_HEAD = ["Product", "Stock", "Quantity", "Price", "Edit"];
 
@@ -108,15 +110,15 @@ export default function OrderDetailsProductsTable({
                       ${product.price}
                     </div>
                   </td>
-                  {/* Edit */}
+                  {/* Remove */}
                   <td className={classes}>
-                    <Tooltip content="Edit Order" className="p-2">
+                    <Tooltip content="Remove order item" className="p-2">
                       <IconButton
                         variant="text"
                         color="blue-gray"
                         className="flex items-center justify-center"
                       >
-                        <PencilIcon className="h-4 w-4" />
+                        <FaTrash className="h-4 w-4" />
                       </IconButton>
                     </Tooltip>
                   </td>

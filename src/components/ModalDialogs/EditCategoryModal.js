@@ -1,14 +1,13 @@
-import { Button, IconButton } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
-import RoleDropdown from "../Admin/RoleDropdown";
+import { Button, IconButton } from "@material-tailwind/react";
 
-const EditUserModal = ({ user, setModalVisible }) => {
+const EditCategoryModal = ({ category, setModalVisible }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [userName, setUserName] = useState(user.username);
-  const [firstName, setFirstName] = useState(user.first_name);
-  const [lastName, setlastName] = useState(user.last_name);
-  const [role, setRole] = useState(user.role);
+  const [categoryName, setCategoryName] = useState(category.name);
+  const [categoryDescription, setCategoryDescription] = useState(
+    category.description
+  );
 
   useEffect(() => {
     setIsOpen(true);
@@ -33,7 +32,7 @@ const EditUserModal = ({ user, setModalVisible }) => {
         <div className=" bg-white px-10 py-5 rounded-xl">
           {/* Headline */}
           <div className="mt-2 flex justify-between">
-            <h2 className="text-2xl ">Edit user details</h2>
+            <h2 className="text-2xl ">Edit category</h2>
             <IconButton
               variant="outlined"
               color="blue-gray"
@@ -46,70 +45,45 @@ const EditUserModal = ({ user, setModalVisible }) => {
           </div>
           {/* Body */}
           <div className="flex flex-col gap-2">
-            {/* Username */}
-            <div className="mt-5">
-              <label
-                htmlFor="username"
-                className="block mb-2 text-sm font-medium text-gray-600 dark:text-white"
-              >
-                Username:
-              </label>
-              <input
-                type="text"
-                name="username"
-                id="username"
-                className="bg-gray-50 border select-none pointer-events-none text-gray-400 border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                placeholder="Username"
-                value={userName}
-                required
-              ></input>
-            </div>
-            {/* Name */}
+            {/* Category name */}
             <div className="mt-3">
               <label
                 htmlFor="name"
                 className="block mb-2 text-sm font-medium text-gray-600 dark:text-white"
               >
-                First Name:
+                Category Name:
               </label>
               <input
                 type="text"
                 name="name"
                 id="name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                value={categoryName}
+                onChange={(e) => setCategoryName(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                placeholder="Name"
+                placeholder="Category name"
                 required
               ></input>
             </div>
-            {/* Last Name */}
-            <div className="mt-3">
-              <label
-                htmlFor="lastname"
-                className="block mb-2 text-sm font-medium text-gray-600 dark:text-white"
-              >
-                Last Name:
-              </label>
-              <input
-                type="text"
-                name="lastname"
-                id="lastname"
-                value={lastName}
-                onChange={(e) => setlastName(e.target.value)}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                placeholder="Last Name"
-                required
-              ></input>
-            </div>
-            {/* Role */}
+            {/* Description */}
 
             <div className="mt-3">
-              <label className="block mb-2 text-sm font-medium text-gray-600 dark:text-white">
-                Role:
+              <label
+                htmlFor="description"
+                className="block mb-2 text-sm font-medium text-gray-600 dark:text-white"
+              >
+                Description:
               </label>
-              <RoleDropdown selection={role} setSelection={setRole} />
+              <textarea
+                type="text"
+                name="description"
+                id="description"
+                value={categoryDescription}
+                className="bg-gray-50 border min-h-[150px] border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                placeholder="Description"
+                required
+              ></textarea>
             </div>
+            {/* Role */}
           </div>
 
           {/* Footer */}
@@ -127,4 +101,4 @@ const EditUserModal = ({ user, setModalVisible }) => {
   );
 };
 
-export default EditUserModal;
+export default EditCategoryModal;

@@ -99,9 +99,9 @@ const EditProductModal = ({ product, setModalVisible }) => {
       }`}
     >
       <div className="w-fit">
-        <div className=" bg-white px-10 py-7 rounded-xl">
+        <div className=" bg-white px-10 py-5 rounded-xl">
           {/* Headline */}
-          <div className="mt-2 flex justify-end">
+          <div className="flex justify-end">
             <IconButton
               variant="outlined"
               color="blue-gray"
@@ -116,9 +116,9 @@ const EditProductModal = ({ product, setModalVisible }) => {
           <div>
             <div className="max-w-screen-xl mx-auto flex gap-10">
               {/* Image */}
-              <div className="w-2/5 relative bg-gray-200 hover:bg-gray-100 duration-300">
+              <div className="w-2/5 relative bg-gray-200 hover:bg-gray-100 duration-300 ">
                 <img
-                  className="w-full max-w-xs object-cover"
+                  className="max-w-xs object-cover"
                   src={
                     selectedImage === null ? hostLink + image : selectedImage
                   }

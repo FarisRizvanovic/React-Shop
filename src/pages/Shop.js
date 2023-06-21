@@ -69,6 +69,7 @@ const Shop = () => {
         <div className="flex items-center justify-between border-t border-blue-gray-50 p-4 w-full">
           <Button
             variant="outlined"
+            className="bg-white"
             color="blue-gray"
             size="sm"
             onClick={() => setPage(page === 1 ? 1 : page - 1)}
@@ -80,7 +81,7 @@ const Shop = () => {
               variant="outlined"
               color="blue-gray"
               size="sm"
-              className="flex items-center justify-center"
+              className="flex items-center justify-center bg-white"
             >
               {page}
             </IconButton>
@@ -90,6 +91,7 @@ const Shop = () => {
             </p>
           </div>
           <Button
+            className="bg-white"
             variant="outlined"
             color="blue-gray"
             size="sm"
