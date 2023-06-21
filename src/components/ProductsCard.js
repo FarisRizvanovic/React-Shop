@@ -19,7 +19,7 @@ const ProductsCard = ({ product }) => {
   };
 
   return (
-    <div className="group relative">
+    <div className="group relative shadow-2xl h-fit">
       <div
         onClick={handleDetails}
         className="w-full h-96 cursor-pointer overflow-hidden"

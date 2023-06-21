@@ -57,8 +57,12 @@ const OrderManagment = () => {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const formattedDate = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+    const formattedTime = `${date.getHours().toString().padStart(2, "0")}:${date
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
 
-    return formattedDate;
+    return `${formattedDate} at ${formattedTime}h`;
   };
 
   const fetchProducts = async () => {
@@ -87,7 +91,6 @@ const OrderManagment = () => {
     setPage(page === totalPages ? page : page + 1);
     console.log(page);
   };
-  // TESTING
 
   const containerRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -125,7 +128,7 @@ const OrderManagment = () => {
       container.removeEventListener("mousemove", handleMouseMove);
     };
   }, [isDragging, startY, scrollTop]);
-  // TESTING
+
   return (
     <div className="flex min-h-screen flex-col mx-16 mt-10 mb-16 gap-7 max-w-[90vw]">
       {/* Order list */}

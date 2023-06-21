@@ -54,7 +54,7 @@ const Shop = () => {
   };
 
   return (
-    <div className=" min-h-screen flex ">
+    <div className=" min-h-screen flex bg-gray-100">
       <div className="flex-5">
         <Categories searchCallback={searchProducts} />
       </div>
