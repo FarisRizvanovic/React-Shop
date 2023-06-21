@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { categoriesWithNumberOfItems } from "../../api/Api";
 import { toast } from "react-toastify";
 import EditCategoryModal from "../ModalDialogs/EditCategoryModal";
+import AddCategoryModal from "../ModalDialogs/AddCategoryModal";
 
 const TABLE_HEAD = ["Category", "Items in category", "Edit"];
 
@@ -30,7 +31,8 @@ export default function CategoryTable() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const [modalVisible, setModalVisible] = useState(false);
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [addModalVisible, setAddModalVisible] = useState(false);
   const [category, setCategory] = useState({});
 
   useEffect(() => {
@@ -106,6 +108,7 @@ export default function CategoryTable() {
               </Button>
               <Button
                 color="green"
+                onClick={() => setAddModalVisible(true)}
                 className="h-fit w-full min-w-max whitespace-nowrap"
               >
                 New Category
@@ -179,7 +182,7 @@ export default function CategoryTable() {
                             variant="text"
                             color="blue-gray"
                             onClick={() =>
-                              setModalVisible(true) & setCategory(category)
+                              setEditModalVisible(true) & setCategory(category)
                             }
                             className="flex items-center justify-center "
                           >
@@ -235,10 +238,16 @@ export default function CategoryTable() {
           </Button>
         </CardFooter>
       </Card>
-      {modalVisible && (
+      {editModalVisible && (
         <EditCategoryModal
           category={category}
-          setModalVisible={setModalVisible}
+          setModalVisible={setEditModalVisible}
+        />
+      )}
+      {addModalVisible && (
+        <AddCategoryModal
+          category={category}
+          setModalVisible={setAddModalVisible}
         />
       )}
     </>

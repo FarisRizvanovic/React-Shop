@@ -17,7 +17,7 @@ const EditCategoryModal = ({ category, setModalVisible }) => {
     setIsOpen(false);
     setTimeout(() => {
       setModalVisible(false);
-    }, 200); // Adjust the delay to match your desired animation duration
+    }, 200);
   };
 
   return (
