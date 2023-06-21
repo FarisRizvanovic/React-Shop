@@ -1,6 +1,6 @@
 import { Button, IconButton } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
-import RoleDropdown from "./RoleDropdown";
+import RoleDropdown from "../Admin/RoleDropdown";
 
 const EditUserModal = ({ user, setModalVisible }) => {
   const [isOpen, setIsOpen] = useState(false);

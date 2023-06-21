@@ -17,7 +17,7 @@ import {
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { getUsers } from "../../api/Api";
-import EditUserModal from "./EditUserModal";
+import EditUserModal from "../ModalDialogs/EditUserModal";
 
 const TABLE_HEAD = [
   "Profile picture",

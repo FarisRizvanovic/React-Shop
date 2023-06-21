@@ -18,6 +18,7 @@ import {
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { productsData } from "../../api/Api";
+import EditProductModal from "../ModalDialogs/EditProducModal";
 
 const TABLE_HEAD = [
   "Product",
@@ -38,6 +39,9 @@ export default function ProductsManagmentTable() {
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     fetchProducts("");
@@ -65,86 +69,80 @@ export default function ProductsManagmentTable() {
     } catch (error) {}
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const formattedDate = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+
+    return formattedDate;
+  };
+
   return (
-    <Card className="h-full w-full">
-      <CardHeader floated={false} shadow={false} className="rounded-none">
-        <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
-          <div>
-            <Typography variant="h5" color="blue-gray">
-              Last Added Products
-            </Typography>
-            <Typography className="mt-1 font-normal text-gray-500">
-              These are details about the last added products
-            </Typography>
-          </div>
-          <div className="flex w-full shrink-0 gap-2 md:w-max">
-            <div className="flex items-center"></div>
-            <div className="w-full relative flex items-center justify-center">
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Start typing..."
-                className="pl-4 pr-10 py-2 rounded-lg border border-gray-400 focus:outline-none focus:ring focus:border-blue-400"
-              />
-              {searchTerm.length > 0 ? (
-                <p
-                  className="absolute right-3 cursor-pointer text-gray-400 hover:text-black duration-200"
-                  onClick={() => fetchProducts("") & setSearchTerm("")}
-                >
-                  x
-                </p>
-              ) : (
-                <MagnifyingGlassIcon className="absolute right-2 h-6 w-6 text-gray-400" />
-              )}
+    <>
+      <Card className="h-full w-full">
+        <CardHeader floated={false} shadow={false} className="rounded-none">
+          <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
+            <div>
+              <Typography variant="h5" color="blue-gray">
+                Last Added Products
+              </Typography>
+              <Typography className="mt-1 font-normal text-gray-500">
+                These are details about the last added products
+              </Typography>
             </div>
-            <Button
-              color="blue"
-              size="sm"
-              className="w-full"
-              onClick={() => fetchProducts(searchTerm)}
-            >
-              Search
-            </Button>
-          </div>
-        </div>
-      </CardHeader>
-      <CardBody className="px-0 mt-5">
-        <table className="w-full min-w-max table-auto text-left">
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head) => (
-                <th
-                  key={head}
-                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
-                >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
+            <div className="flex w-full shrink-0 gap-2 md:w-max">
+              <div className="flex items-center"></div>
+              <div className="w-full relative flex items-center justify-center">
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Start typing..."
+                  className="pl-4 pr-10 py-2 rounded-lg border border-gray-400 focus:outline-none focus:ring focus:border-blue-400"
+                />
+                {searchTerm.length > 0 ? (
+                  <p
+                    className="absolute right-3 cursor-pointer text-gray-400 hover:text-black duration-200"
+                    onClick={() => fetchProducts("") & setSearchTerm("")}
                   >
-                    {head}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {products.map(
-              (
-                {
-                  product_id,
-                  image,
-                  title,
-                  stock,
-                  date,
-                  isNew,
-                  oldPrice,
-                  price,
-                  rating,
-                },
-                index
-              ) => {
+                    x
+                  </p>
+                ) : (
+                  <MagnifyingGlassIcon className="absolute right-2 h-6 w-6 text-gray-400" />
+                )}
+              </div>
+              <Button
+                color="blue"
+                size="sm"
+                className="w-full"
+                onClick={() => fetchProducts(searchTerm)}
+              >
+                Search
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
+        <CardBody className="px-0 mt-5">
+          <table className="w-full min-w-max table-auto text-left">
+            <thead>
+              <tr>
+                {TABLE_HEAD.map((head) => (
+                  <th
+                    key={head}
+                    className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                  >
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal leading-none opacity-70"
+                    >
+                      {head}
+                    </Typography>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {products.map((product, index) => {
                 const isLast = index === products.length - 1;
                 const classes = isLast
                   ? "p-4"
@@ -152,15 +150,15 @@ export default function ProductsManagmentTable() {
 
                 return (
                   <tr
-                    key={product_id}
+                    key={product.product_id}
                     className="hover:bg-gray-100 duration-200"
                   >
                     {/* Product */}
                     <td className={classes}>
                       <div className="flex items-center gap-3">
                         <Avatar
-                          src={hostLink + image}
-                          alt={title}
+                          src={hostLink + product.image}
+                          alt={product.title}
                           size="md"
                           className="border border-blue-gray-50 bg-blue-gray-50/50 p-1 object-cover"
                         />
@@ -169,7 +167,7 @@ export default function ProductsManagmentTable() {
                           color="blue-gray"
                           className="font-bold"
                         >
-                          {title}
+                          {product.title}
                         </Typography>
                       </div>
                     </td>
@@ -180,7 +178,7 @@ export default function ProductsManagmentTable() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {stock}
+                        {product.stock}
                       </Typography>
                     </td>
                     {/* Date added */}
@@ -190,7 +188,7 @@ export default function ProductsManagmentTable() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {date}1.1.2023
+                        {formatDate(product.created_at)}
                       </Typography>
                     </td>
                     {/* New in collection */}
@@ -199,9 +197,11 @@ export default function ProductsManagmentTable() {
                         <Chip
                           size="sm"
                           variant="ghost"
-                          value={isNew === true ? "Yes" : "No"}
+                          value={product.isNew === true ? "Yes" : "No"}
                           className={`rounded-xl ${
-                            isNew === true ? "bg-green-300" : "bg-amber-300"
+                            product.isNew === true
+                              ? "bg-green-300"
+                              : "bg-amber-300"
                           }`}
                         />
                       </div>
@@ -209,19 +209,19 @@ export default function ProductsManagmentTable() {
                     {/* Old price */}
                     <td className={classes}>
                       <div className="flex items-center gap-3 text-red-500 font-semibold">
-                        ${oldPrice}
+                        ${product.oldPrice}
                       </div>
                     </td>
                     {/* New price */}
                     <td className={classes}>
                       <div className="flex items-center gap-3 text-green-600 font-semibold">
-                        ${price}
+                        ${product.price}
                       </div>
                     </td>
                     {/* Rating */}
                     <td className={classes}>
                       <div className="flex items-center gap-3">
-                        {rating} / 5
+                        {product.rating} / 5
                       </div>
                     </td>
                     {/* Edit */}
@@ -231,6 +231,9 @@ export default function ProductsManagmentTable() {
                           variant="text"
                           color="blue-gray"
                           className="flex items-center justify-center"
+                          onClick={() =>
+                            setSelectedProduct(product) & setModalVisible(true)
+                          }
                         >
                           <PencilIcon className="h-4 w-4" />
                         </IconButton>
@@ -238,30 +241,29 @@ export default function ProductsManagmentTable() {
                     </td>
                   </tr>
                 );
-              }
-            )}
-          </tbody>
-        </table>
-      </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Button
-          variant="outlined"
-          color="blue-gray"
-          size="sm"
-          onClick={() => setPage(page === 1 ? 1 : page - 1)}
-        >
-          Previous
-        </Button>
-        <div className="flex items-center gap-2">
-          <IconButton
+              })}
+            </tbody>
+          </table>
+        </CardBody>
+        <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+          <Button
             variant="outlined"
             color="blue-gray"
             size="sm"
-            className="flex items-center justify-center"
+            onClick={() => setPage(page === 1 ? 1 : page - 1)}
           >
-            {page}
-          </IconButton>
-          {/* <IconButton
+            Previous
+          </Button>
+          <div className="flex items-center gap-2">
+            <IconButton
+              variant="outlined"
+              color="blue-gray"
+              size="sm"
+              className="flex items-center justify-center"
+            >
+              {page}
+            </IconButton>
+            {/* <IconButton
             variant="text"~
             color="blue-gray"
             size="sm"
@@ -270,19 +272,26 @@ export default function ProductsManagmentTable() {
             2
           </IconButton> */}
 
-          <p className="text-gray-400">
-            / {totalPages == 0 ? "1" : totalPages}
-          </p>
-        </div>
-        <Button
-          variant="outlined"
-          color="blue-gray"
-          size="sm"
-          onClick={() => setPage(page == totalPages ? page : page + 1)}
-        >
-          Next
-        </Button>
-      </CardFooter>
-    </Card>
+            <p className="text-gray-400">
+              / {totalPages == 0 ? "1" : totalPages}
+            </p>
+          </div>
+          <Button
+            variant="outlined"
+            color="blue-gray"
+            size="sm"
+            onClick={() => setPage(page == totalPages ? page : page + 1)}
+          >
+            Next
+          </Button>
+        </CardFooter>
+      </Card>
+      {modalVisible && (
+        <EditProductModal
+          product={selectedProduct}
+          setModalVisible={setModalVisible}
+        />
+      )}
+    </>
   );
 }
