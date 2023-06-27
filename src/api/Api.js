@@ -162,3 +162,11 @@ export async function addOrder(orderRequest) {
   const request = axios.post(`http://localhost:5108/orders/add`, orderRequest);
   return request;
 }
+
+export async function updateUser(id, user) {
+  const request = await axios.put(
+    `http://localhost:5108/user/update/${id}`,
+    user
+  );
+  return request;
+}

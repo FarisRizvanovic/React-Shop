@@ -14,6 +14,7 @@ const Dropdown = ({ selection, setSelection }) => {
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setIsOpen(false);
+    setSelection(option);
   };
 
   useEffect(() => {

@@ -1,8 +1,10 @@
 import { Button, IconButton } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
 import RoleDropdown from "../Admin/RoleDropdown";
+import { updateUser } from "../../api/Api";
+import { toast } from "react-toastify";
 
-const EditUserModal = ({ user, setModalVisible }) => {
+const EditUserModal = ({ user, setModalVisible, refreshCallback }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [userName, setUserName] = useState(user.username);
@@ -19,6 +21,25 @@ const EditUserModal = ({ user, setModalVisible }) => {
     setTimeout(() => {
       setModalVisible(false);
     }, 200); // Adjust the delay to match your desired animation duration
+  };
+
+  const saveUser = async () => {
+    try {
+      const updatedUser = {
+        id: user.id,
+        username: userName,
+        first_name: firstName,
+        last_name: lastName,
+        role: role,
+      };
+
+      await updateUser(user.id, updatedUser);
+      toast.success("User updated");
+      closeModal();
+      refreshCallback();
+    } catch {
+      toast.error("Error saving user");
+    }
   };
 
   return (
@@ -117,7 +138,7 @@ const EditUserModal = ({ user, setModalVisible }) => {
             <Button color="red" className="flex-1" onClick={() => closeModal()}>
               Cancle
             </Button>
-            <Button color="green" className="flex-1">
+            <Button color="green" className="flex-1" onClick={() => saveUser()}>
               Save user
             </Button>
           </div>

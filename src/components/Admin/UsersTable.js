@@ -63,6 +63,10 @@ export default function UsersTable() {
     }
   }, [searchTerm]);
 
+  const refreshData = () => {
+    fetchUsers(searchTerm);
+  };
+
   return (
     <>
       <Card className="h-full w-full">
@@ -253,7 +257,11 @@ export default function UsersTable() {
         </CardFooter>
       </Card>
       {modalVisible && (
-        <EditUserModal user={selectedUser} setModalVisible={setModalVisible} />
+        <EditUserModal
+          user={selectedUser}
+          setModalVisible={setModalVisible}
+          refreshCallback={refreshData}
+        />
       )}
     </>
   );
