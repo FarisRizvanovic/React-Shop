@@ -170,3 +170,19 @@ export async function updateUser(id, user) {
   );
   return request;
 }
+
+export async function updateProduct(id, product) {
+  const request = await axios.put(
+    `http://localhost:5108/product/update/${id}`,
+    product
+  );
+  return request;
+}
+
+export async function updateProductImage(id, formData) {
+  const request = await axios.put(
+    `http://localhost:5108/product/update/image/${id}`,
+    formData
+  );
+  return request;
+}

@@ -33,7 +33,7 @@ const TABLE_HEAD = [
 
 const hostLink = "http://localhost:5108/";
 
-export default function ProductsManagmentTable() {
+export default function ProductsManagmentTable({ refreshCallback }) {
   const [products, setProducts] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -74,6 +74,11 @@ export default function ProductsManagmentTable() {
     const formattedDate = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
 
     return formattedDate;
+  };
+
+  const refreshData = async () => {
+    await fetchProducts(searchTerm);
+    refreshCallback();
   };
 
   return (
@@ -290,6 +295,7 @@ export default function ProductsManagmentTable() {
         <EditProductModal
           product={selectedProduct}
           setModalVisible={setModalVisible}
+          refreshCallback={refreshData}
         />
       )}
     </>

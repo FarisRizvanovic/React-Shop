@@ -1,10 +1,15 @@
 import React from "react";
 import ProductLowOnStockTable from "./ProductLowOnStockTable";
 
-const ProductsLowOnStock = () => {
+const ProductsLowOnStock = ({ refreshCalback }) => {
+  const refreshData = () => {
+    refreshCalback();
+    console.log("refreshData");
+  };
+
   return (
     <div>
-      <ProductLowOnStockTable />
+      <ProductLowOnStockTable refreshCallback={refreshData} />
     </div>
   );
 };

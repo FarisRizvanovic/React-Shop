@@ -2,11 +2,16 @@ import { Button, IconButton } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
 import RoleDropdown from "../Admin/RoleDropdown";
 import { toast } from "react-toastify";
-import { categoriesData, addANewProduct } from "../../api/Api";
+import {
+  categoriesData,
+  addANewProduct,
+  updateProduct,
+  updateProductImage,
+} from "../../api/Api";
 
 const hostLink = "http://localhost:5108/";
 
-const EditProductModal = ({ product, setModalVisible }) => {
+const EditProductModal = ({ product, setModalVisible, refreshCallback }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [title, setTitle] = useState(product.title);
@@ -87,6 +92,35 @@ const EditProductModal = ({ product, setModalVisible }) => {
     } else if (!currPriceErrorShown) {
       setCurrPriceErrorShown(true);
       toast.error("Current price must be a number!");
+    }
+  };
+
+  const saveProduct = async () => {
+    try {
+      const updatedProduct = {
+        product_id: product.product_id,
+        category_id: category,
+        title: title,
+        description: description,
+        price: currPrice,
+        oldPrice: prevPrice,
+        stock: stock,
+        isNew: newInColl,
+        rating: product.rating,
+      };
+
+      const formData = new FormData();
+      formData.append("imageFile", file);
+
+      await updateProductImage(product.product_id, formData);
+
+      await updateProduct(product.product_id, updatedProduct);
+
+      toast.success("Product updated successfully!");
+      closeModal();
+      refreshCallback();
+    } catch {
+      toast.error("Failed to update product!");
     }
   };
 
@@ -254,7 +288,11 @@ const EditProductModal = ({ product, setModalVisible }) => {
             <Button color="red" className="flex-1" onClick={() => closeModal()}>
               Cancle
             </Button>
-            <Button color="green" className="flex-1">
+            <Button
+              color="green"
+              className="flex-1"
+              onClick={() => saveProduct()}
+            >
               Save product
             </Button>
           </div>

@@ -61,10 +61,16 @@ const ProductManagment = () => {
     setCurrentSelectedOption(menuItem);
   };
 
-  const reloadCountData = () => {
-    fetchCategoryCount();
-    fetchProductCount();
-    getProductsLowStockCount();
+  const reloadCountData = async () => {
+    await fetchCategoryCount();
+    await fetchProductCount();
+    await getProductsLowStockCount();
+  };
+
+  const refreshData = async () => {
+    await fetchCategoryCount();
+    await fetchProductCount();
+    await getProductsLowStockCount();
   };
 
   return (
@@ -118,13 +124,13 @@ const ProductManagment = () => {
 
       <div className="bg-white flex-1 shadow-xl p-5 rounded-3xl">
         {currentSelectedOption === "Products Managment Table" ? (
-          <ProductsManagmentTable />
+          <ProductsManagmentTable refreshCallback={refreshData} />
         ) : currentSelectedOption === "Add a new product" ? (
           <AddNewProduct onNewProductAdded={reloadCountData} />
         ) : currentSelectedOption === "Category managment" ? (
           <CategoryTable />
         ) : (
-          <ProductsLowOnStock />
+          <ProductsLowOnStock refreshCalback={refreshData} />
         )}
       </div>
     </div>
