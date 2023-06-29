@@ -18,7 +18,7 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { productsData, productsForOrderId } from "../../api/Api";
+import { productsData, productsForOrderId } from "../../../api/Api";
 import { FaTrash } from "react-icons/fa";
 
 const TABLE_HEAD = ["Product", "Stock", "Quantity", "Price", "Edit"];

@@ -186,3 +186,18 @@ export async function updateProductImage(id, formData) {
   );
   return request;
 }
+
+export async function addCategory(categoryName, categoryDescription) {
+  const request = await axios.post(
+    `http://localhost:5108/categories/add/${categoryName}/${categoryDescription}`
+  );
+  return request;
+}
+
+export async function updateCategory(id, category) {
+  const request = await axios.put(
+    `http://localhost:5108/category/update/${id}`,
+    category
+  );
+  return request;
+}

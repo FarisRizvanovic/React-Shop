@@ -13,6 +13,10 @@ const Categories = ({ searchCallback }) => {
 
   useEffect(() => {
     try {
+      if (selectedMenuItem === "All Categories") {
+        searchCallback(searchTerm, 1);
+        return;
+      }
       const category = categories.find((c) => c.name === selectedMenuItem);
       const categoryId = category.category_id;
       searchCallback(searchTerm, categoryId);
@@ -25,7 +29,9 @@ const Categories = ({ searchCallback }) => {
         const response = await categoriesData();
         const categories = response.data;
 
-        setCategories(categories);
+        const categoriesWithAll = [{ name: "All Categories" }, ...categories];
+
+        setCategories(categoriesWithAll);
       } catch (error) {
         console.error("Failed to fetch categories:", error);
       }

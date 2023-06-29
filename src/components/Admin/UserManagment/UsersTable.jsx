@@ -16,8 +16,9 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { getUsers } from "../../api/Api";
-import EditUserModal from "../ModalDialogs/EditUserModal";
+import { getUsers } from "../../../api/Api";
+import EditUserModal from "../../ModalDialogs/EditUserModal";
+import { FaTrash } from "react-icons/fa";
 
 const TABLE_HEAD = [
   "Profile picture",
@@ -119,7 +120,9 @@ export default function UsersTable() {
                 {TABLE_HEAD.map((head) => (
                   <th
                     key={head}
-                    className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                    className={`border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 ${
+                      head === "Edit" ? "text-center" : ""
+                    } `}
                   >
                     <Typography
                       variant="small"
@@ -194,8 +197,9 @@ export default function UsersTable() {
                         />
                       </div>
                     </td>
-                    {/* Edit */}
-                    <td className={classes}>
+
+                    <td className={classes + ` flex justify-center`}>
+                      {/* Edit */}
                       <Tooltip content="Edit User" className="p-2">
                         <IconButton
                           variant="text"
@@ -206,6 +210,20 @@ export default function UsersTable() {
                           className="flex items-center justify-center"
                         >
                           <PencilIcon className="h-4 w-4" />
+                        </IconButton>
+                      </Tooltip>
+
+                      {/* Delete */}
+                      <Tooltip content="Delete User" className="p-2">
+                        <IconButton
+                          variant="text"
+                          color="blue-gray"
+                          // onClick={() =>
+                          //   setDeleteModalVisible(true)
+                          // }
+                          className="flex items-center justify-center "
+                        >
+                          <FaTrash className="h-4 w-4" />
                         </IconButton>
                       </Tooltip>
                     </td>

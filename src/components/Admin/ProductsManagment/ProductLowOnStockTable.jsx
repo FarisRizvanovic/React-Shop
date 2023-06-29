@@ -17,8 +17,9 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { productsData } from "../../api/Api";
-import EditProductModal from "../ModalDialogs/EditProducModal";
+import { getProductsLowOnStock } from "../../../api/Api";
+import EditProductModal from "../../ModalDialogs/EditProducModal";
+import { FaTrash } from "react-icons/fa";
 
 const TABLE_HEAD = [
   "Product",
@@ -33,7 +34,7 @@ const TABLE_HEAD = [
 
 const hostLink = "http://localhost:5108/";
 
-export default function ProductsManagmentTable({ refreshCallback }) {
+export default function ProductLowOnStockTable({ refreshCallback }) {
   const [products, setProducts] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -48,20 +49,20 @@ export default function ProductsManagmentTable({ refreshCallback }) {
   }, []);
 
   useEffect(() => {
-    if (searchTerm === "") {
-      fetchProducts("");
-    }
-  }, [searchTerm]);
-
-  useEffect(() => {
     if (page <= totalPages) {
       fetchProducts(searchTerm);
     }
   }, [page]);
 
+  useEffect(() => {
+    if (searchTerm === "") {
+      fetchProducts("");
+    }
+  }, [searchTerm]);
+
   const fetchProducts = async (searchTerm) => {
     try {
-      const response = await productsData(page, searchTerm);
+      const response = await getProductsLowOnStock(page, searchTerm);
       const products = response.data.items;
 
       setTotalPages(response.data.totalPages);
@@ -88,10 +89,10 @@ export default function ProductsManagmentTable({ refreshCallback }) {
           <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
             <div>
               <Typography variant="h5" color="blue-gray">
-                Last Added Products
+                Products low on stock
               </Typography>
               <Typography className="mt-1 font-normal text-gray-500">
-                These are details about the last added products
+                These are the produts that are low on stock ({`<`}5)
               </Typography>
             </div>
             <div className="flex w-full shrink-0 gap-2 md:w-max">
@@ -133,7 +134,9 @@ export default function ProductsManagmentTable({ refreshCallback }) {
                 {TABLE_HEAD.map((head) => (
                   <th
                     key={head}
-                    className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                    className={`border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 ${
+                      head === "Edit" ? "text-center" : ""
+                    } `}
                   >
                     <Typography
                       variant="small"
@@ -229,8 +232,9 @@ export default function ProductsManagmentTable({ refreshCallback }) {
                         {product.rating} / 5
                       </div>
                     </td>
-                    {/* Edit */}
-                    <td className={classes}>
+
+                    <td className={classes + ` flex justify-center`}>
+                      {/* Edit */}
                       <Tooltip content="Edit Product" className="p-2">
                         <IconButton
                           variant="text"
@@ -241,6 +245,20 @@ export default function ProductsManagmentTable({ refreshCallback }) {
                           }
                         >
                           <PencilIcon className="h-4 w-4" />
+                        </IconButton>
+                      </Tooltip>
+
+                      {/* Delete */}
+                      <Tooltip content="Delete Product" className="p-2 ">
+                        <IconButton
+                          variant="text"
+                          color="blue-gray"
+                          // onClick={() =>
+                          //   setDeleteModalVisible(true)
+                          // }
+                          className="flex items-center justify-center "
+                        >
+                          <FaTrash className="h-4 w-4" />
                         </IconButton>
                       </Tooltip>
                     </td>

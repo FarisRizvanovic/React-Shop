@@ -17,14 +17,15 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { categoriesWithNumberOfItems } from "../../api/Api";
+import { categoriesWithNumberOfItems } from "../../../api/Api";
 import { toast } from "react-toastify";
-import EditCategoryModal from "../ModalDialogs/EditCategoryModal";
-import AddCategoryModal from "../ModalDialogs/AddCategoryModal";
+import EditCategoryModal from "../../ModalDialogs/EditCategoryModal";
+import AddCategoryModal from "../../ModalDialogs/AddCategoryModal";
+import { FaTrash } from "react-icons/fa";
 
 const TABLE_HEAD = ["Category", "Items in category", "Edit"];
 
-export default function CategoryTable() {
+export default function CategoryTable({ refreshCallback }) {
   const [categories, setCategories] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,6 +47,7 @@ export default function CategoryTable() {
 
       setTotalPages(response.data.totalPages);
       setCategories(data);
+      refreshCallback();
     } catch (e) {
       console.log(e);
       toast.error("Couldn't get categories.");
@@ -63,6 +65,11 @@ export default function CategoryTable() {
       getCategoriesData("");
     }
   }, [searchTerm]);
+
+  const refresh = async () => {
+    refreshCallback();
+    await getCategoriesData(searchTerm);
+  };
 
   return (
     <>
@@ -172,25 +179,36 @@ export default function CategoryTable() {
                         {category.product_count}
                       </Typography>
                     </td>
-                    {/* Edit */}
-                    {category.name === "All Categories" ? (
-                      <div></div>
-                    ) : (
-                      <td className={classes + " flex justify-center"}>
-                        <Tooltip content="Edit Category" className="p-2 ">
-                          <IconButton
-                            variant="text"
-                            color="blue-gray"
-                            onClick={() =>
-                              setEditModalVisible(true) & setCategory(category)
-                            }
-                            className="flex items-center justify-center "
-                          >
-                            <PencilIcon className="h-4 w-4" />
-                          </IconButton>
-                        </Tooltip>
-                      </td>
-                    )}
+
+                    <td className={classes + " flex justify-center"}>
+                      {/* Edit */}
+                      <Tooltip content="Edit Category" className="p-2 ">
+                        <IconButton
+                          variant="text"
+                          color="blue-gray"
+                          onClick={() =>
+                            setEditModalVisible(true) & setCategory(category)
+                          }
+                          className="flex items-center justify-center "
+                        >
+                          <PencilIcon className="h-4 w-4" />
+                        </IconButton>
+                      </Tooltip>
+
+                      {/* Delete */}
+                      <Tooltip content="Delete Category" className="p-2 ">
+                        <IconButton
+                          variant="text"
+                          color="blue-gray"
+                          // onClick={() =>
+                          //   setDeleteModalVisible(true)
+                          // }
+                          className="flex items-center justify-center "
+                        >
+                          <FaTrash className="h-4 w-4" />
+                        </IconButton>
+                      </Tooltip>
+                    </td>
                   </tr>
                 );
               })}
@@ -242,12 +260,14 @@ export default function CategoryTable() {
         <EditCategoryModal
           category={category}
           setModalVisible={setEditModalVisible}
+          refreshCallback={refresh}
         />
       )}
       {addModalVisible && (
         <AddCategoryModal
           category={category}
           setModalVisible={setAddModalVisible}
+          refreshCallback={refresh}
         />
       )}
     </>

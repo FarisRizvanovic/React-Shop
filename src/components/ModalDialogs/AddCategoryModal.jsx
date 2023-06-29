@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button, IconButton } from "@material-tailwind/react";
+import { addCategory } from "../../api/Api";
+import { toast } from "react-toastify";
 
-const AddCategoryModal = ({ setModalVisible }) => {
+const AddCategoryModal = ({ setModalVisible, refreshCallback }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [categoryName, setCategoryName] = useState("");
@@ -16,6 +18,17 @@ const AddCategoryModal = ({ setModalVisible }) => {
     setTimeout(() => {
       setModalVisible(false);
     }, 200);
+  };
+
+  const saveCategory = async () => {
+    try {
+      await addCategory(categoryName, categoryDescription);
+      toast.success("Category saved");
+      closeModal();
+      refreshCallback();
+    } catch {
+      toast.error("Error while saving category");
+    }
   };
 
   return (
@@ -75,6 +88,7 @@ const AddCategoryModal = ({ setModalVisible }) => {
                 type="text"
                 name="description"
                 id="description"
+                onChange={(e) => setCategoryDescription(e.target.value)}
                 value={categoryDescription}
                 className="bg-gray-50 border min-h-[150px] border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 placeholder="Description"
@@ -89,8 +103,12 @@ const AddCategoryModal = ({ setModalVisible }) => {
             <Button color="red" className="flex-1" onClick={() => closeModal()}>
               Cancle
             </Button>
-            <Button color="green" className="flex-1">
-              Save user
+            <Button
+              color="green"
+              className="flex-1"
+              onClick={() => saveCategory()}
+            >
+              Save category
             </Button>
           </div>
         </div>

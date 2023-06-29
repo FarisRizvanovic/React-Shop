@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CategoryTable from "./CategoryTable";
-import { categoriesWithNumberOfItems } from "../../api/Api";
+import { categoriesWithNumberOfItems } from "../../../api/Api";
 import { toast } from "react-toastify";
 
 const CategoryManagment = () => {
@@ -19,6 +19,7 @@ const CategoryManagment = () => {
       }
     };
     getCategoriesData();
+    console.log("ALOOOOOOO");
   }, []);
 
   return (

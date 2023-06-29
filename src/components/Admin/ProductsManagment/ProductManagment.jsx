@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import AddNewProduct from "./AddNewProduct";
 import ProductsManagmentTable from "./ProductsManagmentTable";
 import CategoryManagment from "./CategoryManagment";
-import ProductsLowOnStock from "./ProductsLowOnStock";
+import ProductsLowOnStock from "../ProductsManagment/ProductsLowOnStock";
 import { Button } from "@material-tailwind/react";
 import {
   getCategoryCount,
   getProductCount,
   getProductsLowOnStockCount,
-} from "../../api/Api";
+} from "../../../api/Api";
 import { toast } from "react-toastify";
 import CategoryTable from "./CategoryTable";
 
@@ -128,7 +128,7 @@ const ProductManagment = () => {
         ) : currentSelectedOption === "Add a new product" ? (
           <AddNewProduct onNewProductAdded={reloadCountData} />
         ) : currentSelectedOption === "Category managment" ? (
-          <CategoryTable />
+          <CategoryTable refreshCallback={reloadCountData} />
         ) : (
           <ProductsLowOnStock refreshCalback={refreshData} />
         )}

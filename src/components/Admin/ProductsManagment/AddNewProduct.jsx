@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { categoriesData, addANewProduct } from "../../api/Api";
+import { categoriesData, addANewProduct } from "../../../api/Api";
 
 const AddNewProduct = ({ onNewProductAdded }) => {
   const [categories, setCategories] = useState([]);

@@ -1,6 +1,6 @@
 import { Button, IconButton } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
-import RoleDropdown from "../Admin/RoleDropdown";
+import RoleDropdown from "../Admin/UserManagment/RoleDropdown";
 import { updateUser } from "../../api/Api";
 import { toast } from "react-toastify";
 

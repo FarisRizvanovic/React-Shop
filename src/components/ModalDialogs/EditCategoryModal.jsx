@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button, IconButton } from "@material-tailwind/react";
+import { updateCategory } from "../../api/Api";
+import { toast } from "react-toastify";
 
-const EditCategoryModal = ({ category, setModalVisible }) => {
+const EditCategoryModal = ({ category, setModalVisible, refreshCallback }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [categoryName, setCategoryName] = useState(category.name);
@@ -18,6 +20,21 @@ const EditCategoryModal = ({ category, setModalVisible }) => {
     setTimeout(() => {
       setModalVisible(false);
     }, 200);
+  };
+
+  const saveCategory = async () => {
+    try {
+      await updateCategory(category.category_id, {
+        category_id: category.category_id,
+        name: categoryName,
+        description: categoryDescription,
+      });
+      toast.success("Category saved");
+      closeModal();
+      refreshCallback();
+    } catch {
+      toast.error("Error while saving category");
+    }
   };
 
   return (
@@ -77,6 +94,7 @@ const EditCategoryModal = ({ category, setModalVisible }) => {
                 type="text"
                 name="description"
                 id="description"
+                onChange={(e) => setCategoryDescription(e.target.value)}
                 value={categoryDescription}
                 className="bg-gray-50 border min-h-[150px] border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 placeholder="Description"
@@ -91,7 +109,11 @@ const EditCategoryModal = ({ category, setModalVisible }) => {
             <Button color="red" className="flex-1" onClick={() => closeModal()}>
               Cancle
             </Button>
-            <Button color="green" className="flex-1">
+            <Button
+              color="green"
+              className="flex-1"
+              onClick={() => saveCategory()}
+            >
               Save user
             </Button>
           </div>
