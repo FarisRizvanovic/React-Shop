@@ -1,4 +1,5 @@
 import { PencilIcon } from "@heroicons/react/24/solid";
+import DeleteModal from "../../ModalDialogs/DeleteModal";
 import {
   ArrowDownTrayIcon,
   MagnifyingGlassIcon,
@@ -17,7 +18,7 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { categoriesWithNumberOfItems } from "../../../api/Api";
+import { categoriesWithNumberOfItems, deleteCategory } from "../../../api/Api";
 import { toast } from "react-toastify";
 import EditCategoryModal from "../../ModalDialogs/EditCategoryModal";
 import AddCategoryModal from "../../ModalDialogs/AddCategoryModal";
@@ -34,6 +35,8 @@ export default function CategoryTable({ refreshCallback }) {
 
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [addModalVisible, setAddModalVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+
   const [category, setCategory] = useState({});
 
   useEffect(() => {
@@ -69,6 +72,17 @@ export default function CategoryTable({ refreshCallback }) {
   const refresh = async () => {
     refreshCallback();
     await getCategoriesData(searchTerm);
+  };
+
+  const removeCategory = async () => {
+    try {
+      await deleteCategory(category.category_id);
+      toast.success("Category deleted.");
+      refresh();
+      setDeleteModalVisible(false);
+    } catch {
+      toast.error("Couldn't delete category.");
+    }
   };
 
   return (
@@ -200,9 +214,9 @@ export default function CategoryTable({ refreshCallback }) {
                         <IconButton
                           variant="text"
                           color="blue-gray"
-                          // onClick={() =>
-                          //   setDeleteModalVisible(true)
-                          // }
+                          onClick={() =>
+                            setCategory(category) & setDeleteModalVisible(true)
+                          }
                           className="flex items-center justify-center "
                         >
                           <FaTrash className="h-4 w-4" />
@@ -268,6 +282,13 @@ export default function CategoryTable({ refreshCallback }) {
           category={category}
           setModalVisible={setAddModalVisible}
           refreshCallback={refresh}
+        />
+      )}
+      {deleteModalVisible && (
+        <DeleteModal
+          title={category.name}
+          setModalVisible={setDeleteModalVisible}
+          ondelete={removeCategory}
         />
       )}
     </>

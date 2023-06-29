@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ordersWithCustomers, productsForOrderId } from "../../../api/Api";
+import {
+  deleteOrder,
+  ordersWithCustomers,
+  productsForOrderId,
+} from "../../../api/Api";
 import { toast } from "react-toastify";
 import OrderDetailsProductsTable from "./OrderDetailsProductsTable";
 import { Button } from "@material-tailwind/react";
@@ -17,20 +21,21 @@ const OrderManagment = () => {
   const [totalOrders, setTotalOrders] = useState(0);
 
   useEffect(() => {
-    const getOrdersWithCustomers = async () => {
-      try {
-        const request = await ordersWithCustomers();
-        const data = request;
-        setTotalOrders(data.length);
-        setOrdersWCustomers(data);
-        setCurrentOrderId(data[0].order_id);
-        setCurrentCustomer(data[0].customer);
-      } catch {
-        toast.error("Couldn't get the orders.");
-      }
-    };
     getOrdersWithCustomers();
   }, []);
+
+  const getOrdersWithCustomers = async () => {
+    try {
+      const request = await ordersWithCustomers();
+      const data = request;
+      setTotalOrders(data.length);
+      setOrdersWCustomers(data);
+      setCurrentOrderId(data[0].order_id);
+      setCurrentCustomer(data[0].customer);
+    } catch {
+      toast.error("Couldn't get the orders.");
+    }
+  };
 
   const getCurrentCustomer = () => {
     try {
@@ -129,6 +134,21 @@ const OrderManagment = () => {
     };
   }, [isDragging, startY, scrollTop]);
 
+  const cancelOrder = async () => {
+    try {
+      await deleteOrder(currentOrderId);
+      toast.success("Order canceled.");
+      // TODO : ADD MODAL
+      getOrdersWithCustomers();
+    } catch {
+      toast.error("Couldn't cancel the order.");
+    }
+  };
+
+  const refreshData = async () => {
+    await fetchProducts();
+  };
+
   return (
     <div className="flex min-h-screen flex-col mx-16 mt-10 mb-16 gap-7 max-w-[90vw]">
       {/* Order list */}
@@ -168,7 +188,12 @@ const OrderManagment = () => {
           <div className="flex justify-between font-medium mt-2 mr-7 text-3xl pl-11 bg-gray-700 text-white p-6 rounded-r-2xl">
             <p>Order details</p>
             <div className="flex gap-2">
-              <Button className="h-max bg-red-500">Cancel order</Button>
+              <Button
+                className="h-max bg-red-500"
+                onClick={() => cancelOrder()}
+              >
+                Cancel order
+              </Button>
               <Button className="h-max bg-green-500">Confirm order</Button>
             </div>
           </div>
@@ -219,6 +244,7 @@ const OrderManagment = () => {
                 onNext={onNext}
                 page={page}
                 totalPages={totalPages}
+                refreshCallback={refreshData}
               />
             </div>
           </div>

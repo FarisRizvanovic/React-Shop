@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Button, IconButton } from "@material-tailwind/react";
-import { updateCategory } from "../../api/Api";
-import { toast } from "react-toastify";
 
 const DeleteModal = ({ onDelete, title, setModalVisible }) => {
   const [isOpen, setIsOpen] = useState(false);

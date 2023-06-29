@@ -208,3 +208,24 @@ export async function deleteProduct(id) {
   );
   return request;
 }
+
+export async function deleteCategory(id) {
+  const request = await axios.delete(
+    `http://localhost:5108/category/delete/${id}`
+  );
+  return request;
+}
+
+export async function deleteOrder(id) {
+  const request = await axios.delete(
+    `http://localhost:5108/order/delete/${id}`
+  );
+  return request;
+}
+
+export async function deleteOrderItem(id) {
+  const request = await axios.delete(
+    `http://localhost:5108/orderitem/delete/${id}`
+  );
+  return request;
+}
