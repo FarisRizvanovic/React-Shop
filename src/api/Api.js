@@ -201,3 +201,10 @@ export async function updateCategory(id, category) {
   );
   return request;
 }
+
+export async function deleteProduct(id) {
+  const request = await axios.delete(
+    `http://localhost:5108/product/delete/${id}`
+  );
+  return request;
+}

@@ -17,9 +17,11 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { productsData } from "../../../api/Api";
+import { deleteProduct, productsData } from "../../../api/Api";
 import EditProductModal from "../../ModalDialogs/EditProducModal";
 import { FaTrash } from "react-icons/fa";
+import DeleteModal from "../../ModalDialogs/DeleteModal";
+import { toast } from "react-toastify";
 
 const TABLE_HEAD = [
   "Product",
@@ -41,7 +43,9 @@ export default function ProductsManagmentTable({ refreshCallback }) {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const [modalVisible, setModalVisible] = useState(false);
+  const [productModalVisible, setProductModalVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
@@ -80,6 +84,17 @@ export default function ProductsManagmentTable({ refreshCallback }) {
   const refreshData = async () => {
     await fetchProducts(searchTerm);
     refreshCallback();
+  };
+
+  const removeProduct = async () => {
+    try {
+      await deleteProduct(selectedProduct.product_id);
+      toast.success("Product deleted successfully");
+      setDeleteModalVisible(false);
+      refreshData();
+    } catch {
+      toast.error("Error deleting product");
+    }
   };
 
   return (
@@ -241,7 +256,8 @@ export default function ProductsManagmentTable({ refreshCallback }) {
                           color="blue-gray"
                           className="flex items-center justify-center"
                           onClick={() =>
-                            setSelectedProduct(product) & setModalVisible(true)
+                            setSelectedProduct(product) &
+                            setProductModalVisible(true)
                           }
                         >
                           <PencilIcon className="h-4 w-4" />
@@ -253,9 +269,10 @@ export default function ProductsManagmentTable({ refreshCallback }) {
                         <IconButton
                           variant="text"
                           color="blue-gray"
-                          // onClick={() =>
-                          //   setDeleteModalVisible(true)
-                          // }
+                          onClick={() =>
+                            setSelectedProduct(product) &
+                            setDeleteModalVisible(true)
+                          }
                           className="flex items-center justify-center "
                         >
                           <FaTrash className="h-4 w-4" />
@@ -309,11 +326,18 @@ export default function ProductsManagmentTable({ refreshCallback }) {
           </Button>
         </CardFooter>
       </Card>
-      {modalVisible && (
+      {productModalVisible && (
         <EditProductModal
           product={selectedProduct}
-          setModalVisible={setModalVisible}
+          setModalVisible={setProductModalVisible}
           refreshCallback={refreshData}
+        />
+      )}
+      {deleteModalVisible && (
+        <DeleteModal
+          setModalVisible={setDeleteModalVisible}
+          title={selectedProduct.title}
+          onDelete={removeProduct}
         />
       )}
     </>

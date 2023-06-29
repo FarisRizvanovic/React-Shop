@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@material-tailwind/react";
 import SalesChart from "./SalesChart";
 import { Link, useLoaderData } from "react-router-dom";
-import SalesPerCategoryChart from "../Dashboard/SalesPerCategoryChart";
+import SalesPerCategoryChart from "./SalesPerCategoryChart";
 
 const Dashboard = () => {
   const dashboardData = useLoaderData();

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ordersWithCustomers, productsForOrderId } from "../../../api/Api";
 import { toast } from "react-toastify";
-import OrderDetailsProductsTable from "../OrdersManagment/OrderDetailsProductsTable";
+import OrderDetailsProductsTable from "./OrderDetailsProductsTable";
 import { Button } from "@material-tailwind/react";
 
 const OrderManagment = () => {
