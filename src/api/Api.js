@@ -229,3 +229,8 @@ export async function deleteOrderItem(id) {
   );
   return request;
 }
+
+export async function deleteUser(id) {
+  const request = await axios.delete(`http://localhost:5108/user/delete/${id}`);
+  return request;
+}

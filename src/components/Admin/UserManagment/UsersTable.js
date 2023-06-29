@@ -16,9 +16,11 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { getUsers } from "../../../api/Api";
+import { deleteUser, getUsers } from "../../../api/Api";
 import EditUserModal from "../../ModalDialogs/EditUserModal";
 import { FaTrash } from "react-icons/fa";
+import { toast } from "react-toastify";
+import DeleteModal from "../../ModalDialogs/DeleteModal";
 
 const TABLE_HEAD = [
   "Profile picture",
@@ -37,6 +39,8 @@ export default function UsersTable() {
   const [totalPages, setTotalPages] = useState(1);
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+
   const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
@@ -66,6 +70,17 @@ export default function UsersTable() {
 
   const refreshData = () => {
     fetchUsers(searchTerm);
+  };
+
+  const removeUser = async () => {
+    try {
+      await deleteUser(selectedUser.id);
+      toast.success("User deleted successfully");
+      setDeleteModalVisible(false);
+      refreshData();
+    } catch {
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -218,9 +233,9 @@ export default function UsersTable() {
                         <IconButton
                           variant="text"
                           color="blue-gray"
-                          // onClick={() =>
-                          //   setDeleteModalVisible(true)
-                          // }
+                          onClick={() =>
+                            setSelectedUser(user) & setDeleteModalVisible(true)
+                          }
                           className="flex items-center justify-center "
                         >
                           <FaTrash className="h-4 w-4" />
@@ -279,6 +294,13 @@ export default function UsersTable() {
           user={selectedUser}
           setModalVisible={setModalVisible}
           refreshCallback={refreshData}
+        />
+      )}
+      {deleteModalVisible && (
+        <DeleteModal
+          title={selectedUser.username}
+          setModalVisible={setDeleteModalVisible}
+          onDelete={removeUser}
         />
       )}
     </>
