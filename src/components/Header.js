@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { logoDark, cart } from "../assets/index";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Button } from "@material-tailwind/react";
 
 function Header() {
   const productData = useSelector((state) => state.bazar.productData);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <div className="w-full h-20 bg-white border-b-[2px] border-b-gray-300 font-titleFont sticky top-0 left-0 z-10">
@@ -53,11 +55,42 @@ function Header() {
               </span>
             </div>
           </Link>
-          <img
+
+          {!isLoggedIn ? (
+            <div className="flex gap-2">
+              <Button
+                color="blue"
+                size="regular"
+                ripple="light"
+                className="h-10 w-32 font-bold flex items-center justify-center"
+              >
+                <Link to="/login" className="px-12 py-3">
+                  Login
+                </Link>
+              </Button>
+
+              <Button
+                color="green"
+                size="regular"
+                ripple="light"
+                className="h-10 w-32 font-bold flex items-center justify-center"
+              >
+                <Link to="/register" className="px-10 py-3">
+                  Register
+                </Link>
+              </Button>
+            </div>
+          ) : (
+            <div>
+              <h2>NAME</h2>
+            </div>
+          )}
+
+          {/* <img
             className="w-8 h-8 rounded-full"
             src="https://media.licdn.com/dms/image/C5603AQGKTGbZ1NZcug/profile-displayphoto-shrink_800_800/0/1618007191604?e=2147483647&v=beta&t=zbj2zNKvb8UcyOy_z3c129NudkJnB--aG1WHTpw0vBo"
             alt="userProfileImage"
-          />
+          /> */}
         </div>
       </div>
     </div>

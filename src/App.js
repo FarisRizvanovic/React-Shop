@@ -22,6 +22,8 @@ import CustomerManagment from "./components/Admin/CustomerManagment";
 import UserManagment from "./components/Admin/UserManagment/UserManagment";
 import Other from "./pages/Other";
 import InternalServerError from "./pages/InternalServerError";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const Layout = () => {
   return (
@@ -59,6 +61,14 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
         loader: productDataLoader,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
       {
         path: "/product/:id",
