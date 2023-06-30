@@ -3,10 +3,11 @@ import { logoDark, cart } from "../assets/index";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Button } from "@material-tailwind/react";
+import { useIsAuthenticated } from "react-auth-kit";
 
 function Header() {
   const productData = useSelector((state) => state.bazar.productData);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(useIsAuthenticated());
 
   return (
     <div className="w-full h-20 bg-white border-b-[2px] border-b-gray-300 font-titleFont sticky top-0 left-0 z-10">
@@ -38,14 +39,16 @@ function Header() {
                 Shop
               </li>
             </Link>
-            <Link to="/admin/dashboard">
-              <li
-                className="text-base text-black font-bold hover:text-orange-900
+            {isLoggedIn ? (
+              <Link to="/admin/dashboard">
+                <li
+                  className="text-base text-black font-bold hover:text-orange-900
               hover:underline underline-offset-2 decoration-[1px] cursor-pointer duration-300"
-              >
-                Admin
-              </li>
-            </Link>
+                >
+                  Admin
+                </li>
+              </Link>
+            ) : null}
           </ul>
           <Link to="/cart">
             <div className="relative">
@@ -60,8 +63,6 @@ function Header() {
             <div className="flex gap-2">
               <Button
                 color="blue"
-                size="regular"
-                ripple="light"
                 className="h-10 w-32 font-bold flex items-center justify-center"
               >
                 <Link to="/login" className="px-12 py-3">
@@ -71,8 +72,6 @@ function Header() {
 
               <Button
                 color="green"
-                size="regular"
-                ripple="light"
                 className="h-10 w-32 font-bold flex items-center justify-center"
               >
                 <Link to="/register" className="px-10 py-3">

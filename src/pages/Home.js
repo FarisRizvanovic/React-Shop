@@ -4,6 +4,8 @@ import Products from "../components/Products";
 import { Link, useLoaderData } from "react-router-dom";
 import Base64Image from "../components/Base64Image";
 
+import axiosInstance from "../api/AxiosInstance";
+
 const Home = () => {
   const [products, setProducts] = useState([]);
 
@@ -12,6 +14,17 @@ const Home = () => {
   useEffect(() => {
     setProducts(data.data.items);
   }, [data]);
+
+  useEffect(() => {
+    try {
+      // http://localhost:5108/users/1/s
+      axiosInstance.get("/users/1/s").then((res) => {
+        console.log(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   return (
     <div>

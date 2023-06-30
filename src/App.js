@@ -7,9 +7,12 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
 import {
+  BrowserRouter,
   createBrowserRouter,
   Outlet,
   RouterProvider,
+  Routes,
+  Route,
   ScrollRestoration,
 } from "react-router-dom";
 import { productsData, getDashboardData } from "./api/Api";
@@ -24,6 +27,7 @@ import Other from "./pages/Other";
 import InternalServerError from "./pages/InternalServerError";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import { AuthProvider, RequireAuth } from "react-auth-kit";
 
 const Layout = () => {
   return (
@@ -125,7 +129,14 @@ const router = createBrowserRouter([
 function App() {
   return (
     <div className="font-bodyFont">
-      <RouterProvider router={router} />
+      <AuthProvider
+        authName="_auth"
+        authType="cookie"
+        cookieDomain={window.location.hostname}
+        cookieSecure={false}
+      >
+        <RouterProvider router={router} />
+      </AuthProvider>
     </div>
   );
 }

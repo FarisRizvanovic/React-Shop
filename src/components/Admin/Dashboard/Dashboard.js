@@ -12,9 +12,13 @@ const Dashboard = () => {
   const [productsLowOnStockCount, setProductsLowOnStockCount] = useState(0);
 
   useEffect(() => {
-    setProductCount(dashboardData.productCount);
-    setCategoryCount(dashboardData.categoryCount);
-    setProductsLowOnStockCount(dashboardData.lowOnStockCount);
+    try {
+      setProductCount(dashboardData.productCount);
+      setCategoryCount(dashboardData.categoryCount);
+      setProductsLowOnStockCount(dashboardData.lowOnStockCount);
+    } catch (err) {
+      console.log(err);
+    }
   }, [dashboardData]);
 
   return (
