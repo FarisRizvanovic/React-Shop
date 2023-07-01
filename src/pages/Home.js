@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import Banner from "../components/Banner";
 import Products from "../components/Products";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { productsData } from "../api/Api";
 
 const Home = () => {

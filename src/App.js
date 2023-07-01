@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import AdminLayout from "./pages/AdminLayout";
@@ -8,15 +8,10 @@ import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
 import {
   BrowserRouter,
-  createBrowserRouter,
-  Outlet,
-  RouterProvider,
   Routes,
   Route,
   ScrollRestoration,
-  Router,
 } from "react-router-dom";
-import { productsData, getDashboardData } from "./api/Api";
 import Shop from "./pages/Shop";
 import Dashboard from "./components/Admin/Dashboard/Dashboard";
 import ContentManagment from "./components/Admin/ContentManagment/ContentManagment";
@@ -25,11 +20,9 @@ import OrderManagment from "./components/Admin/OrdersManagment/OrderManagment";
 import CustomerManagment from "./components/Admin/CustomerManagment";
 import UserManagment from "./components/Admin/UserManagment/UserManagment";
 import Other from "./pages/Other";
-import InternalServerError from "./pages/InternalServerError";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import { AuthProvider, RequireAuth, useSignOut } from "react-auth-kit";
-import Cookies from "js-cookie";
+import { AuthProvider } from "react-auth-kit";
 import PrivateRoute from "./pages/PrivateRoute";
 
 function App() {
@@ -42,6 +35,19 @@ function App() {
         cookieSecure={false}
       >
         <BrowserRouter>
+          <ToastContainer
+            position="bottom-right"
+            autoClose={3000}
+            limit={3}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
           <Header />
           <Routes>
             <Route path="/login" element={<Login />} />

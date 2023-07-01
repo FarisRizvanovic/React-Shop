@@ -1,8 +1,5 @@
 import { PencilIcon } from "@heroicons/react/24/solid";
-import {
-  ArrowDownTrayIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import {
   Card,
   CardHeader,
@@ -14,7 +11,6 @@ import {
   Avatar,
   IconButton,
   Tooltip,
-  Input,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { deleteProduct, productsData } from "../../../api/Api";
@@ -313,14 +309,14 @@ export default function ProductsManagmentTable({ refreshCallback }) {
           </IconButton> */}
 
             <p className="text-gray-400">
-              / {totalPages == 0 ? "1" : totalPages}
+              / {totalPages === 0 ? "1" : totalPages}
             </p>
           </div>
           <Button
             variant="outlined"
             color="blue-gray"
             size="sm"
-            onClick={() => setPage(page == totalPages ? page : page + 1)}
+            onClick={() => setPage(page === totalPages ? page : page + 1)}
           >
             Next
           </Button>

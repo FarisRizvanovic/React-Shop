@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSignOut, useAuthUser } from "react-auth-kit";
-import { Outlet, Navigate, ScrollRestoration } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const PrivateRoute = () => {

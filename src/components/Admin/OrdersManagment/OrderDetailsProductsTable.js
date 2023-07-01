@@ -1,28 +1,15 @@
-import { PencilIcon } from "@heroicons/react/24/solid";
-import {
-  ArrowDownTrayIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
 import {
   Card,
-  CardHeader,
   Typography,
   Button,
   CardBody,
-  Chip,
   CardFooter,
-  DeleteIcon,
   Avatar,
   IconButton,
   Tooltip,
-  Input,
 } from "@material-tailwind/react";
-import { useEffect, useState } from "react";
-import {
-  deleteOrderItem,
-  productsData,
-  productsForOrderId,
-} from "../../../api/Api";
+import { useState } from "react";
+import { deleteOrderItem } from "../../../api/Api";
 import { FaTrash } from "react-icons/fa";
 import DeleteModal from "../../ModalDialogs/DeleteModal";
 import { toast } from "react-toastify";
@@ -187,7 +174,7 @@ export default function OrderDetailsProductsTable({
           </IconButton> */}
 
             <p className="text-gray-400">
-              / {totalPages == 0 ? "1" : totalPages}
+              / {totalPages === 0 ? "1" : totalPages}
             </p>
           </div>
           <Button

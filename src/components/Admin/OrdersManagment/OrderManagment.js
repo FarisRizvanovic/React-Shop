@@ -43,7 +43,7 @@ const OrderManagment = () => {
   const getCurrentCustomer = () => {
     try {
       const order = ordersWCustomers.filter((element) => {
-        if (element.order_id == currentOrderId) {
+        if (element.order_id === currentOrderId) {
           return true;
         }
         return false;
@@ -84,7 +84,7 @@ const OrderManagment = () => {
   useEffect(() => {
     let productTotal = 0;
     products.map((product) => {
-      productTotal += product.price;
+      return (productTotal += product.price);
     });
     setTotal(productTotal);
   }, [products]);

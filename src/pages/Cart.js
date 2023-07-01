@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { logoDark, cart } from "../assets/index";
 import CartItem from "../components/CartItems";
-import { Button } from "bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { HiOutlineArrowLeft } from "react-icons/hi";

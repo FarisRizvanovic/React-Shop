@@ -1,12 +1,6 @@
 import React from "react";
 import { ImGithub } from "react-icons/im";
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaInstagram,
-  FaYoutube,
-  FaHome,
-} from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 
 const ContentManagment = () => {
   return (

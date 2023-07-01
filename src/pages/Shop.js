@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import ShopProducts from "../components/ShopProducts";
-
 import Categories from "../components/Categories";
 import { getProductsByCategoryId, productsData } from "../api/Api";
 import { IconButton, Button } from "@material-tailwind/react";

@@ -139,9 +139,8 @@ const EditProductModal = ({ product, setModalVisible, refreshCallback }) => {
             <IconButton
               variant="outlined"
               color="blue-gray"
-              size="sm"
               onClick={() => closeModal()}
-              className="flex items-center justify-center  focus:ring-0"
+              className="flex items-center justify-center w-7 h-7 focus:ring-0"
             >
               X
             </IconButton>

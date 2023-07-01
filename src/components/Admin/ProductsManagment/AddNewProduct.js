@@ -110,7 +110,7 @@ const AddNewProduct = ({ onNewProductAdded }) => {
     formData.append("ImageFile", file);
 
     try {
-      const request = await addANewProduct(formData).then(() => {
+      await addANewProduct(formData).then(() => {
         toast.success("Product added successfully");
         resetData();
       });

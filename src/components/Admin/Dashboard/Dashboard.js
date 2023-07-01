@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@material-tailwind/react";
 import SalesChart from "./SalesChart";
-import { Link, useLoaderData } from "react-router-dom";
 import SalesPerCategoryChart from "./SalesPerCategoryChart";
 import { getDashboardData } from "../../../api/Api";
 

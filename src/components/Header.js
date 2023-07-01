@@ -113,7 +113,10 @@ function Header() {
       </div>
       {isUserMenuOpen ? (
         <div className="flex justify-end  pr-10">
-          <div className="bg-white flex-row w-44 justify-end  rounded-md mt-0.5 shadow-2xl ">
+          <div className="bg-white flex-row w-44 justify-end rounded-md mt-0.5 shadow-2xl ">
+            <p className="text-blue-600 text-xl text-center font-bold p-2 hover:bg-blue-600 hover:text-white duration-100 rounded-md cursor-pointer">
+              Profile
+            </p>
             <p
               onClick={() => signOutUser()}
               className="text-blue-600 text-xl text-center font-bold p-2 hover:bg-blue-600 hover:text-white duration-100 rounded-md cursor-pointer"
