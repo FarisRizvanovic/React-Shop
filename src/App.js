@@ -14,6 +14,7 @@ import {
   Routes,
   Route,
   ScrollRestoration,
+  Router,
 } from "react-router-dom";
 import { productsData, getDashboardData } from "./api/Api";
 import Shop from "./pages/Shop";
@@ -31,134 +32,7 @@ import { AuthProvider, RequireAuth, useSignOut } from "react-auth-kit";
 import Cookies from "js-cookie";
 import PrivateRoute from "./pages/PrivateRoute";
 
-const Layout = () => {
-  const signOut = useSignOut();
-
-  useEffect(() => {
-    const loginExpiryTimestap = Cookies.get("_auth_storage");
-    console.log(loginExpiryTimestap);
-    const loginExpiryDate = new Date(loginExpiryTimestap);
-    console.log(loginExpiryDate);
-    loginExpiryDate.setSeconds(loginExpiryDate.getSeconds() + 20);
-    console.log(loginExpiryDate);
-    console.log(new Date());
-    // fix this the loginexpirydate is always one day behind
-
-    if (loginExpiryDate > new Date()) {
-      signOut();
-      console.log("logged out");
-    }
-  }, []);
-  return (
-    <div>
-      <Header />
-      <ToastContainer
-        position="bottom-right"
-        autoClose={3000}
-        limit={3}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-      <ScrollRestoration />
-      <Outlet />
-      <Footer />
-    </div>
-  );
-};
-
-const productDataLoader = () => productsData(1, "");
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    errorElement: <InternalServerError />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-        loader: productDataLoader,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
-      {
-        path: "/product/:id",
-        element: <ProductDetails />,
-      },
-      {
-        path: "/cart",
-        element: <Cart />,
-      },
-      {
-        path: "/shop",
-        element: <Shop />,
-        loader: productDataLoader,
-      },
-      {
-        path: "/admin",
-        element: <AdminLayout />,
-        children: [
-          {
-            path: "/admin/dashboard",
-            element: <Dashboard />,
-            loader: getDashboardData,
-          },
-          {
-            path: "/admin/content-managment",
-            element: <ContentManagment />,
-          },
-          {
-            path: "/admin/products-managment",
-            element: <ProductManagment />,
-          },
-          {
-            path: "/admin/order-managment",
-            element: <OrderManagment />,
-          },
-          {
-            path: "/admin/customers-managment",
-            element: <CustomerManagment />,
-          },
-          {
-            path: "/admin/user-managment",
-            element: <UserManagment />,
-          },
-        ],
-      },
-      {
-        path: "*",
-        element: <Other />,
-      },
-    ],
-  },
-]);
-
 function App() {
-  // return (
-  //   <div className="font-bodyFont">
-  //   <AuthProvider
-  //     authName="_auth"
-  //     authType="cookie"
-  //     cookieDomain={window.location.hostname}
-  //     cookieSecure={false}
-  //   >
-  //     <RouterProvider router={router} />
-  //   </AuthProvider>
-  //   </div>
-  // );
-
   return (
     <div className="font-bodyFont">
       <AuthProvider
@@ -171,10 +45,11 @@ function App() {
           <Header />
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<ScrollRestoration /> && <Home />} />
             <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/shop" element={<Shop />} />
+            <Route path="/cart" element={<ScrollRestoration /> && <Cart />} />
+            <Route path="/shop" element={<ScrollRestoration /> && <Shop />} />
 
             <Route element={<PrivateRoute />}>
               <Route path="/admin" element={<AdminLayout />}>
@@ -201,7 +76,10 @@ function App() {
                 />
               </Route>
             </Route>
+
+            <Route path="*" element={<Other />} />
           </Routes>
+
           <Footer />
         </BrowserRouter>
       </AuthProvider>

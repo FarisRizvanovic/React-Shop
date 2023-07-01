@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSignOut, useAuthUser } from "react-auth-kit";
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet, Navigate, ScrollRestoration } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const PrivateRoute = () => {
@@ -8,8 +8,6 @@ const PrivateRoute = () => {
 
   useEffect(() => {
     const loginExpiryTimestap = Cookies.get("_auth_storage");
-
-    console.log(loginExpiryTimestap);
     if (loginExpiryTimestap === undefined || loginExpiryTimestap === null) {
       setAuth(false);
     }
