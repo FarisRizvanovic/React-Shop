@@ -181,7 +181,7 @@ export default function ProductsManagmentTable({ refreshCallback }) {
                       <div className="flex items-center gap-3">
                         <Avatar
                           src={hostLink + product.image}
-                          alt={product.title}
+                          alt={product.title.slice(0, 8) + "..."}
                           size="md"
                           className="border border-blue-gray-50 bg-blue-gray-50/50 p-1 object-cover"
                         />

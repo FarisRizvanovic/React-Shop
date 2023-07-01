@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import ShopProducts from "../components/ShopProducts";
-import { useLoaderData } from "react-router-dom";
+
 import Categories from "../components/Categories";
 import { getProductsByCategoryId, productsData } from "../api/Api";
 import { IconButton, Button } from "@material-tailwind/react";
@@ -13,12 +13,18 @@ const Shop = () => {
   const [_categoryId, _setCategoryId] = useState(1);
   const [_searchTerm, _setSearchTerm] = useState("");
 
-  const data = useLoaderData();
-
   useEffect(() => {
-    setTotalPages(data.data.totalPages);
-    setProducts(data.data.items);
-  }, [data]);
+    getProducts();
+  }, []);
+
+  const getProducts = async () => {
+    try {
+      const response = await productsData(1, "");
+      const data = response.data.items;
+      setTotalPages(data.data.totalPages);
+      setProducts(data);
+    } catch {}
+  };
 
   useEffect(() => {
     searchProducts(_searchTerm, _categoryId);

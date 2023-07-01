@@ -2,29 +2,22 @@ import React, { useEffect, useState, useRef } from "react";
 import Banner from "../components/Banner";
 import Products from "../components/Products";
 import { Link, useLoaderData } from "react-router-dom";
-import Base64Image from "../components/Base64Image";
-
-import axiosInstance from "../api/AxiosInstance";
+import { productsData } from "../api/Api";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
 
-  const data = useLoaderData();
-
   useEffect(() => {
-    setProducts(data.data.items);
-  }, [data]);
-
-  useEffect(() => {
-    try {
-      // http://localhost:5108/users/1/s
-      axiosInstance.get("/users/1/s").then((res) => {
-        console.log(res.data);
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    getProducts();
   }, []);
+
+  const getProducts = async () => {
+    try {
+      const response = await productsData(1, "");
+      const data = response.data.items;
+      setProducts(data);
+    } catch {}
+  };
 
   return (
     <div>

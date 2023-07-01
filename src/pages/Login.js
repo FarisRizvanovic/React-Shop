@@ -30,7 +30,7 @@ const Login = () => {
 
       signIn({
         token: response.data.data,
-        expiresIn: 60 * 60 * 24 * 1,
+        expiresIn: 20,
         tokenType: "Bearer",
         authState: { username: username },
       });

@@ -76,7 +76,6 @@ const OrderManagment = () => {
   const fetchProducts = async () => {
     try {
       const response = await productsForOrderId(page, currentOrderId);
-      console.log(response);
       setProducts(response.items);
       setTotalPages(response.totalPages);
     } catch (error) {}
@@ -92,12 +91,10 @@ const OrderManagment = () => {
 
   const onPrevious = () => {
     setPage(page === 1 ? 1 : page - 1);
-    console.log(page);
   };
 
   const onNext = () => {
     setPage(page === totalPages ? page : page + 1);
-    console.log(page);
   };
 
   const containerRef = useRef(null);
