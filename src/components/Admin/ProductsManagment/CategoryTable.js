@@ -236,8 +236,7 @@ export default function CategoryTable({ refreshCallback }) {
             <IconButton
               variant="outlined"
               color="blue-gray"
-              size="sm"
-              className="flex items-center justify-center"
+              className="flex items-center justify-center w-7 h-7 "
             >
               {page}
             </IconButton>

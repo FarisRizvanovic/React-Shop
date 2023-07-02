@@ -203,3 +203,8 @@ export async function deleteUser(id) {
   const request = await axiosInstance.delete(`/user/delete/${id}`);
   return request;
 }
+
+export async function registerUser(user) {
+  const request = await axiosInstance.post(`/user/register`, user);
+  return request;
+}

@@ -244,36 +244,38 @@ export default function ProductsManagmentTable({ refreshCallback }) {
                       </div>
                     </td>
 
-                    <td className={classes + ` flex`}>
-                      {/* Edit */}
-                      <Tooltip content="Edit Product" className="p-2">
-                        <IconButton
-                          variant="text"
-                          color="blue-gray"
-                          className="flex items-center justify-center"
-                          onClick={() =>
-                            setSelectedProduct(product) &
-                            setProductModalVisible(true)
-                          }
-                        >
-                          <PencilIcon className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
+                    <td className={classes}>
+                      <div className="flex justify-center">
+                        {/* Edit */}
+                        <Tooltip content="Edit Product" className="p-2">
+                          <IconButton
+                            variant="text"
+                            color="blue-gray"
+                            className="flex items-center justify-center"
+                            onClick={() =>
+                              setSelectedProduct(product) &
+                              setProductModalVisible(true)
+                            }
+                          >
+                            <PencilIcon className="h-4 w-4" />
+                          </IconButton>
+                        </Tooltip>
 
-                      {/* Delete */}
-                      <Tooltip content="Delete Product" className="p-2 ">
-                        <IconButton
-                          variant="text"
-                          color="blue-gray"
-                          onClick={() =>
-                            setSelectedProduct(product) &
-                            setDeleteModalVisible(true)
-                          }
-                          className="flex items-center justify-center "
-                        >
-                          <FaTrash className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
+                        {/* Delete */}
+                        <Tooltip content="Delete Product" className="p-2 ">
+                          <IconButton
+                            variant="text"
+                            color="blue-gray"
+                            onClick={() =>
+                              setSelectedProduct(product) &
+                              setDeleteModalVisible(true)
+                            }
+                            className="flex items-center justify-center "
+                          >
+                            <FaTrash className="h-4 w-4" />
+                          </IconButton>
+                        </Tooltip>
+                      </div>
                     </td>
                   </tr>
                 );
@@ -294,8 +296,7 @@ export default function ProductsManagmentTable({ refreshCallback }) {
             <IconButton
               variant="outlined"
               color="blue-gray"
-              size="sm"
-              className="flex items-center justify-center"
+              className="flex items-center justify-center w-7 h-7 "
             >
               {page}
             </IconButton>

@@ -244,32 +244,35 @@ export default function ProductLowOnStockTable({ refreshCallback }) {
                       </div>
                     </td>
 
-                    <td className={classes + ` flex justify-center`}>
-                      {/* Edit */}
-                      <Tooltip content="Edit Product" className="p-2">
-                        <IconButton
-                          variant="text"
-                          color="blue-gray"
-                          className="flex items-center justify-center"
-                          onClick={() =>
-                            setSelectedProduct(product) & setModalVisible(true)
-                          }
-                        >
-                          <PencilIcon className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
+                    <td className={classes}>
+                      <div className="flex justify-center">
+                        {/* Edit */}
+                        <Tooltip content="Edit Product" className="p-2">
+                          <IconButton
+                            variant="text"
+                            color="blue-gray"
+                            className="flex items-center justify-center"
+                            onClick={() =>
+                              setSelectedProduct(product) &
+                              setModalVisible(true)
+                            }
+                          >
+                            <PencilIcon className="h-4 w-4" />
+                          </IconButton>
+                        </Tooltip>
 
-                      {/* Delete */}
-                      <Tooltip content="Delete Product" className="p-2 ">
-                        <IconButton
-                          variant="text"
-                          color="blue-gray"
-                          onClick={() => setDeleteModalVisible(true)}
-                          className="flex items-center justify-center "
-                        >
-                          <FaTrash className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
+                        {/* Delete */}
+                        <Tooltip content="Delete Product" className="p-2 ">
+                          <IconButton
+                            variant="text"
+                            color="blue-gray"
+                            onClick={() => setDeleteModalVisible(true)}
+                            className="flex items-center justify-center "
+                          >
+                            <FaTrash className="h-4 w-4" />
+                          </IconButton>
+                        </Tooltip>
+                      </div>
                     </td>
                   </tr>
                 );
@@ -290,8 +293,7 @@ export default function ProductLowOnStockTable({ refreshCallback }) {
             <IconButton
               variant="outlined"
               color="blue-gray"
-              size="sm"
-              className="flex items-center justify-center"
+              className="flex items-center justify-center w-7 h-7 "
             >
               {page}
             </IconButton>

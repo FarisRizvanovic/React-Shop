@@ -158,7 +158,10 @@ export default function UsersTable() {
                   : "p-4 border-b border-blue-gray-50";
 
                 return (
-                  <tr key={user.id} className="hover:bg-gray-100 duration-200">
+                  <tr
+                    key={user.id}
+                    className=" hover:bg-gray-100 duration-200 "
+                  >
                     {/* Profile picture */}
                     <td className={classes}>
                       <div className="flex items-center gap-3">
@@ -213,34 +216,37 @@ export default function UsersTable() {
                       </div>
                     </td>
 
-                    <td className={classes + ` flex justify-center`}>
+                    <td className={classes}>
                       {/* Edit */}
-                      <Tooltip content="Edit User" className="p-2">
-                        <IconButton
-                          variant="text"
-                          color="blue-gray"
-                          onClick={() =>
-                            setSelectedUser(user) & setModalVisible(true)
-                          }
-                          className="flex items-center justify-center"
-                        >
-                          <PencilIcon className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
+                      <div className="flex justify-center">
+                        <Tooltip content="Edit User" className="p-2">
+                          <IconButton
+                            variant="text"
+                            color="blue-gray"
+                            onClick={() =>
+                              setSelectedUser(user) & setModalVisible(true)
+                            }
+                            className="flex items-center justify-center"
+                          >
+                            <PencilIcon className="h-4 w-4" />
+                          </IconButton>
+                        </Tooltip>
 
-                      {/* Delete */}
-                      <Tooltip content="Delete User" className="p-2">
-                        <IconButton
-                          variant="text"
-                          color="blue-gray"
-                          onClick={() =>
-                            setSelectedUser(user) & setDeleteModalVisible(true)
-                          }
-                          className="flex items-center justify-center "
-                        >
-                          <FaTrash className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
+                        {/* Delete */}
+                        <Tooltip content="Delete User" className="p-2">
+                          <IconButton
+                            variant="text"
+                            color="blue-gray"
+                            onClick={() =>
+                              setSelectedUser(user) &
+                              setDeleteModalVisible(true)
+                            }
+                            className="flex items-center justify-center "
+                          >
+                            <FaTrash className="h-4 w-4" />
+                          </IconButton>
+                        </Tooltip>
+                      </div>
                     </td>
                   </tr>
                 );
@@ -261,11 +267,11 @@ export default function UsersTable() {
             <IconButton
               variant="outlined"
               color="blue-gray"
-              size="sm"
-              className="flex items-center justify-center"
+              className="flex items-center justify-center w-7 h-7 "
             >
               {page}
             </IconButton>
+
             {/* <IconButton
             variant="text"~
             color="blue-gray"
