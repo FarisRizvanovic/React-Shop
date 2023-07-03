@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import { useIsAuthenticated } from "react-auth-kit";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -36,11 +37,8 @@ const Login = () => {
       });
 
       window.location.reload();
-
-      console.log(response);
-    } catch (error) {
-      // Handle login error
-      console.log(error);
+    } catch {
+      toast.error("Wrong username or password");
     }
   };
 
@@ -77,7 +75,10 @@ const Login = () => {
         <div>
           <div className="pl-1 text-sm text-gray-400 flex gap-1">
             No account?
-            <p className="font-bold text-green-400 hover:text-green-700 duration-100 cursor-pointer">
+            <p
+              onClick={() => navigate("/register")}
+              className="font-bold text-green-400 hover:text-green-700 duration-100 cursor-pointer"
+            >
               Register
             </p>
           </div>

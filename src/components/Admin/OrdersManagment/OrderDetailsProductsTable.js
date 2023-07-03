@@ -60,10 +60,9 @@ export default function OrderDetailsProductsTable({
                     <Typography
                       variant="small"
                       color="blue-gray"
+                      children={head}
                       className="font-normal leading-none opacity-70"
-                    >
-                      {head}
-                    </Typography>
+                    />
                   </th>
                 ))}
               </tr>

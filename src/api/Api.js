@@ -208,3 +208,8 @@ export async function registerUser(user) {
   const request = await axiosInstance.post(`/user/register`, user);
   return request;
 }
+
+export async function getOrdersForUser() {
+  const request = await axiosInstance.get(`/orders/user`);
+  return request;
+}

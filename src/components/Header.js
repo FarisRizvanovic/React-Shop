@@ -58,6 +58,17 @@ function Header() {
               </li>
             </Link>
             {isLoggedIn ? (
+              <Link to="/profile">
+                <li
+                  className="text-base text-black font-bold hover:text-orange-900
+            hover:underline underline-offset-2 decoration-[1px] cursor-pointer duration-300"
+                >
+                  Profile
+                </li>
+              </Link>
+            ) : null}
+
+            {isLoggedIn ? (
               <Link to="/admin/dashboard">
                 <li
                   className="text-base text-black font-bold hover:text-orange-900

@@ -24,6 +24,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { AuthProvider } from "react-auth-kit";
 import PrivateRoute from "./pages/PrivateRoute";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -81,6 +82,10 @@ function App() {
                   element={<UserManagment />}
                 />
               </Route>
+            </Route>
+
+            <Route element={<PrivateRoute />}>
+              <Route path="/profile" element={<Profile />} />
             </Route>
 
             <Route path="*" element={<Other />} />

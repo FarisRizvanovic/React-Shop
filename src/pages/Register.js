@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@material-tailwind/react";
 import { toast } from "react-toastify";
 import { registerUser } from "../api/Api";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -9,6 +10,8 @@ const Register = () => {
   const [lastname, setLastname] = useState("");
   const [password, setPassword] = useState("");
   const [cpassword, setCpassword] = useState("");
+
+  const navigate = useNavigate();
 
   const validateInput = () => {
     if (username === "") {
@@ -49,6 +52,7 @@ const Register = () => {
       const user = { username, firstname, lastname, password };
       await registerUser(user);
       toast.success("User registered successfully");
+      navigate("/login");
     } catch {
       toast.error("Error registering user");
     }
@@ -129,7 +133,10 @@ const Register = () => {
         <div>
           <div className="pl-1 text-sm text-gray-400 flex gap-1">
             Already have an account?
-            <p className="font-bold text-blue-400 hover:text-blue-700 duration-100 cursor-pointer">
+            <p
+              onClick={() => navigate("/login")}
+              className="font-bold text-blue-400 hover:text-blue-700 duration-100 cursor-pointer"
+            >
               Login
             </p>
           </div>
