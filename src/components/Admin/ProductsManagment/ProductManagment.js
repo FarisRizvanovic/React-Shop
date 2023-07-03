@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AddNewProduct from "./AddNewProduct";
 import ProductsManagmentTable from "./ProductsManagmentTable";
-import CategoryManagment from "./CategoryManagment";
 import ProductsLowOnStock from "./ProductsLowOnStock";
 import { Button } from "@material-tailwind/react";
 import {

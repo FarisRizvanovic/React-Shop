@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import SidebarItem from "../SidebarItem";
 import { Link } from "react-router-dom";
 
 const AdminSidebar = () => {

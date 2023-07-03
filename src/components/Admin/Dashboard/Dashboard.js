@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@material-tailwind/react";
 import SalesChart from "./SalesChart";
-import { Link, useLoaderData } from "react-router-dom";
 import SalesPerCategoryChart from "./SalesPerCategoryChart";
+import { getDashboardData } from "../../../api/Api";
 
 const Dashboard = () => {
-  const dashboardData = useLoaderData();
-
   const [productCount, setProductCount] = useState(0);
   const [categoryCount, setCategoryCount] = useState(0);
   const [productsLowOnStockCount, setProductsLowOnStockCount] = useState(0);
 
   useEffect(() => {
-    setProductCount(dashboardData.productCount);
-    setCategoryCount(dashboardData.categoryCount);
-    setProductsLowOnStockCount(dashboardData.lowOnStockCount);
-  }, [dashboardData]);
+    getData();
+  }, []);
+
+  const getData = async () => {
+    try {
+      const response = await getDashboardData();
+
+      setProductCount(response.productCount);
+      setCategoryCount(response.categoryCount);
+      setProductsLowOnStockCount(response.lowOnStockCount);
+    } catch {}
+  };
 
   return (
     <div className="flex min-h-[75vh] flex-col mx-16 mt-10 mb-16 gap-7 ">

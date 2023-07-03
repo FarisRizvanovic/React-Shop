@@ -1,21 +1,15 @@
 import { PencilIcon } from "@heroicons/react/24/solid";
 import DeleteModal from "../../ModalDialogs/DeleteModal";
-import {
-  ArrowDownTrayIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import {
   Card,
   CardHeader,
   Typography,
   Button,
   CardBody,
-  Chip,
   CardFooter,
-  Avatar,
   IconButton,
   Tooltip,
-  Input,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { categoriesWithNumberOfItems, deleteCategory } from "../../../api/Api";
@@ -242,8 +236,7 @@ export default function CategoryTable({ refreshCallback }) {
             <IconButton
               variant="outlined"
               color="blue-gray"
-              size="sm"
-              className="flex items-center justify-center"
+              className="flex items-center justify-center w-7 h-7 "
             >
               {page}
             </IconButton>
@@ -257,14 +250,14 @@ export default function CategoryTable({ refreshCallback }) {
           </IconButton> */}
 
             <p className="text-gray-400">
-              / {totalPages == 0 ? "1" : totalPages}
+              / {totalPages === 0 ? "1" : totalPages}
             </p>
           </div>
           <Button
             variant="outlined"
             color="blue-gray"
             size="sm"
-            onClick={() => setPage(page == totalPages ? page : page + 1)}
+            onClick={() => setPage(page === totalPages ? page : page + 1)}
           >
             Next
           </Button>

@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import SidebarItem from "./SidebarItem";
 import { categoriesData } from "../api/Api";
-import {
-  ArrowDownTrayIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { toast } from "react-toastify";
 
 const Categories = ({ searchCallback }) => {
   const [categories, setCategories] = useState([]);
@@ -29,11 +27,14 @@ const Categories = ({ searchCallback }) => {
         const response = await categoriesData();
         const categories = response.data;
 
-        const categoriesWithAll = [{ name: "All Categories" }, ...categories];
+        const categoriesWithAll = [
+          { category_id: 1000000, name: "All Categories" },
+          ...categories,
+        ];
 
         setCategories(categoriesWithAll);
-      } catch (error) {
-        console.error("Failed to fetch categories:", error);
+      } catch {
+        toast.error("Error fetching categories");
       }
     };
     fetchCategories();

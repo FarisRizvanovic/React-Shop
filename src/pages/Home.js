@@ -1,17 +1,23 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import Banner from "../components/Banner";
 import Products from "../components/Products";
-import { Link, useLoaderData } from "react-router-dom";
-import Base64Image from "../components/Base64Image";
+import { Link } from "react-router-dom";
+import { productsData } from "../api/Api";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
 
-  const data = useLoaderData();
-
   useEffect(() => {
-    setProducts(data.data.items);
-  }, [data]);
+    getProducts();
+  }, []);
+
+  const getProducts = async () => {
+    try {
+      const response = await productsData(1, "");
+      const data = response.data.items;
+      setProducts(data);
+    } catch {}
+  };
 
   return (
     <div>

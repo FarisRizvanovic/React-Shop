@@ -43,7 +43,7 @@ const OrderManagment = () => {
   const getCurrentCustomer = () => {
     try {
       const order = ordersWCustomers.filter((element) => {
-        if (element.order_id == currentOrderId) {
+        if (element.order_id === currentOrderId) {
           return true;
         }
         return false;
@@ -76,7 +76,6 @@ const OrderManagment = () => {
   const fetchProducts = async () => {
     try {
       const response = await productsForOrderId(page, currentOrderId);
-      console.log(response);
       setProducts(response.items);
       setTotalPages(response.totalPages);
     } catch (error) {}
@@ -85,19 +84,17 @@ const OrderManagment = () => {
   useEffect(() => {
     let productTotal = 0;
     products.map((product) => {
-      productTotal += product.price;
+      return (productTotal += product.price);
     });
     setTotal(productTotal);
   }, [products]);
 
   const onPrevious = () => {
     setPage(page === 1 ? 1 : page - 1);
-    console.log(page);
   };
 
   const onNext = () => {
     setPage(page === totalPages ? page : page + 1);
-    console.log(page);
   };
 
   const containerRef = useRef(null);
